@@ -58,7 +58,7 @@ const CreateDataOfTheEmployees = () => {
   useEffect(() => {
     // axios get Data GeneralClerk
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployees")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployees")
       .then(function (response) {
         // handle success
         setCheckEmployeesUsername(response.data);
@@ -159,7 +159,7 @@ const CreateDataOfTheEmployees = () => {
     } else if (AlartUsername === false) {
     } else {
       try {
-        await axios.post("https://blush-seahorse-boot.cyclic.app/addEmployees", DataEmployees);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/addEmployees", DataEmployees);
         console.log("SaveData to Employees Success");
         router.push("/employees/");
         setAddEmpSucces(true)
