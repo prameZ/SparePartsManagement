@@ -159,7 +159,7 @@ const CreateDataOfTheEmployees = () => {
     } else if (AlartUsername === false) {
     } else {
       try {
-        await axios.post("https://db-spare-parts-vercel.vercel.app/addEmployees", DataEmployees);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/addEmployees", Name);
         console.log("SaveData to Employees Success");
         router.push("/employees/");
         setAddEmpSucces(true)
