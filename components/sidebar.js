@@ -79,11 +79,11 @@ const Sidebar = () => {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (Login === "") {
-  //     router.push("/login");
-  //   }
-  // }, [LoginAtom]);
+  useEffect(() => {
+    if (Login === "") {
+      router.push("/login");
+    }
+  }, [LoginAtom]);
 
   useEffect(() => {
     axios
