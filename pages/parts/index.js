@@ -90,7 +90,7 @@ const DisplayParts = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         // console.log("Data Sparepart", response.data);
@@ -107,7 +107,7 @@ const DisplayParts = () => {
 
     // Data GeneralClerk
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         // console.log("Data GeneralClerk", response.data);
@@ -323,20 +323,20 @@ const DisplayParts = () => {
       if (InputRequisition !== 0) {
         try {
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
+            "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
             ObjectPartSubID
           );
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
+            "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
             DataRequisition
           );
           // History
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/historySparepartPickup",
+            "https://db-spare-parts-vercel.vercel.app/historySparepartPickup",
             DataHistoryRequisition
           );
           axios
-            .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+            .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
             .then(function (response) {
               // handle success
               // console.log("Data Sparepart", response.data);
@@ -370,9 +370,9 @@ const DisplayParts = () => {
     let ObjectPartSubID = { DataPartSubID };
 
     try {
-      await axios.post("https://blush-seahorse-boot.cyclic.app/deleteSpareparts", ObjectPartSubID);
+      await axios.post("https://db-spare-parts-vercel.vercel.app/deleteSpareparts", ObjectPartSubID);
       axios
-        .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+        .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
         .then(function (response) {
           // handle success
           // console.log("Data Sparepart", response.data);

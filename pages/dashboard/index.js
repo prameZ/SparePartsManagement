@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         setGeneralClerk(response.data);
@@ -39,7 +39,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeWarehouseClerk")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployeeWarehouseClerk")
       .then(function (response) {
         // handle success
         setWarehouseClerk(response.data);
@@ -53,7 +53,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         setSparepart(response.data);
@@ -67,7 +67,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getAllCategory")
+      .get("https://db-spare-parts-vercel.vercel.app/getAllCategory")
       .then(function (response) {
         // handle success
         setAllCategory(response.data);
@@ -81,7 +81,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/MonthofPickupAndReturn")
+      .get("https://db-spare-parts-vercel.vercel.app/MonthofPickupAndReturn")
       .then(function (response) {
         // handle success
         setMonthofPickupAndReturn(response.data);
@@ -95,7 +95,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/TheMostPickedPart")
+      .get("https://db-spare-parts-vercel.vercel.app/TheMostPickedPart")
       .then(function (response) {
         // handle success
         setTheMostPickedPart(response.data);

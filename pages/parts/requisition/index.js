@@ -71,7 +71,7 @@ const Requisition = () => {
   useEffect(() => {
     // Data GeneralClerk
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         // console.log("Data GeneralClerk", response.data);
@@ -87,7 +87,7 @@ const Requisition = () => {
 
     // Data SpareParts
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         // console.log("Data Sparepart", response.data);
@@ -225,16 +225,16 @@ const Requisition = () => {
       } else {
         try {
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
+            "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
             ObjectPartSubID
           );
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
+            "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
             DataRequisition
           );
           // History
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/historySparepartPickup",
+            "https://db-spare-parts-vercel.vercel.app/historySparepartPickup",
             DataHistoryRequisition
           );
           console.log("Requisition to SpareParts Success");

@@ -64,7 +64,7 @@ export default function DataOfTheEmployees() {
   useEffect(() => {
     // Data GeneralClerk
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         setGeneralClerk(response.data);
@@ -80,7 +80,7 @@ export default function DataOfTheEmployees() {
 
     // Data WarehouseClerk
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeWarehouseClerk")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployeeWarehouseClerk")
       .then(function (response) {
         // handle success
         setWarehouseClerk(response.data);
@@ -178,12 +178,12 @@ export default function DataOfTheEmployees() {
     if (Role === "พนักงานทั่วไป") {
       try {
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/deleteEmployees",
+          "https://db-spare-parts-vercel.vercel.app/deleteEmployees",
           ObjectDataEmpSubID
         );
         console.log("DeleteData to GeneralClerk Success");
         axios
-          .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
+          .get("https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk")
           .then(function (response) {
             // handle success
             setGeneralClerk(response.data);
@@ -204,12 +204,12 @@ export default function DataOfTheEmployees() {
     } else if (Role === "พนักงานคลัง") {
       try {
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/deleteEmployees",
+          "https://db-spare-parts-vercel.vercel.app/deleteEmployees",
           ObjectDataEmpSubID
         );
         console.log("DeleteData to WarehouseClerk Success");
         axios
-          .get("https://blush-seahorse-boot.cyclic.app/getEmployeeWarehouseClerk")
+          .get("https://db-spare-parts-vercel.vercel.app/getEmployeeWarehouseClerk")
           .then(function (response) {
             // handle success
             setWarehouseClerk(response.data);

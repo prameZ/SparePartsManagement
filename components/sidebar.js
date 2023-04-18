@@ -87,7 +87,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployees")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployees")
       .then(function (response) {
         // handle success
         setEmployees(response.data);

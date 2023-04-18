@@ -44,7 +44,7 @@ const Login = () => {
     setBtnSubmit(true);
 
     try {
-      await axios.post("https://blush-seahorse-boot.cyclic.app/login", {
+      await axios.post("https://db-spare-parts-vercel.vercel.app/login", {
         Username,
         Password,
       });

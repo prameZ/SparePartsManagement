@@ -58,7 +58,7 @@ const ReturnParts = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickupAmountForReturn")
+      .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickupAmountForReturn")
       .then(function (response) {
         // handle success
         setHistorySparepartPickup(response.data);
@@ -73,7 +73,7 @@ const ReturnParts = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         setSparepart(response.data);
@@ -87,7 +87,7 @@ const ReturnParts = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickup")
+      .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickup")
       .then(function (response) {
         // handle success
         setHistorySparepartPickup2(response.data);
@@ -288,29 +288,29 @@ const ReturnParts = () => {
     if (InputAmountForReturn !== 0) {
       try {
         // Update Spareparts Amount
-        await axios.post("https://blush-seahorse-boot.cyclic.app/findIDSpareparts", ObjectPartSubID);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDSpareparts", ObjectPartSubID);
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
+          "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
           DataAmountReturn
         );
 
         // Update HistorySparepartPickup
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/findIDSparepartPickup",
+          "https://db-spare-parts-vercel.vercel.app/findIDSparepartPickup",
           ObjectPartSubID2
         );
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/updateSparepartPickup",
+          "https://db-spare-parts-vercel.vercel.app/updateSparepartPickup",
           DataAmountReturn2
         );
 
         // History Add
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/historySparepartReturn",
+          "https://db-spare-parts-vercel.vercel.app/historySparepartReturn",
           DataHistoryReturn
         );
         axios
-          .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickupAmountForReturn")
+          .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickupAmountForReturn")
           .then(function (response) {
             // handle success
             setHistorySparepartPickup(response.data);
@@ -325,7 +325,7 @@ const ReturnParts = () => {
           });
 
         axios
-          .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+          .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
           .then(function (response) {
             // handle success
             setSparepart(response.data);
@@ -339,7 +339,7 @@ const ReturnParts = () => {
           });
 
         axios
-          .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickup")
+          .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickup")
           .then(function (response) {
             // handle success
             setHistorySparepartPickup2(response.data);

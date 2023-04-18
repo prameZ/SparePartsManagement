@@ -20,7 +20,7 @@ const Category1 = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getCategory5")
+      .get("https://db-spare-parts-vercel.vercel.app/getCategory5")
       .then(function (response) {
         // handle success
         // console.log("Data Category", response.data);

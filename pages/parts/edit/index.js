@@ -86,7 +86,7 @@ const EditParts = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         setCheckPart(response.data);
@@ -311,11 +311,11 @@ const EditParts = () => {
         };
         try {
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
+            "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
             ObjectPartSubID
           );
           await axios.post(
-            "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
+            "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
             DataWithNoImage
           );
           // console.log("UpdatePartWithNoImage to Sparepart Success");
@@ -358,11 +358,11 @@ const EditParts = () => {
           };
           try {
             await axios.post(
-              "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
+              "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
               ObjectPartSubID
             );
             await axios.post(
-              "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
+              "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
               DataWithImage
             );
             // console.log("UpdatePartWithImage to Sparepart Success");

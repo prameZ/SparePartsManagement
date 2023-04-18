@@ -68,7 +68,7 @@ const CreateParts = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         setCheckPart(response.data);
@@ -249,7 +249,7 @@ const CreateParts = () => {
           Unit,
         };
         try {
-          await axios.post("https://blush-seahorse-boot.cyclic.app/addSparepart", DataWithNoImage);
+          await axios.post("https://db-spare-parts-vercel.vercel.app/addSparepart", DataWithNoImage);
           console.log("AddPartWithNoImage to Sparepart Success");
           router.push("/parts/");
           setAddPartSucces(true);
@@ -288,7 +288,7 @@ const CreateParts = () => {
             Unit,
           };
           try {
-            await axios.post("https://blush-seahorse-boot.cyclic.app/addSparepart", DataWithImage);
+            await axios.post("https://db-spare-parts-vercel.vercel.app/addSparepart", DataWithImage);
             console.log("AddPartWithImage to Sparepart Success");
             router.push("/parts/");
             setAddPartSucces(true);

@@ -44,7 +44,7 @@ const History = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickup")
+      .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickup")
       .then(function (response) {
         // handle success
         setHistorySparepartPickup(response.data);
@@ -59,7 +59,7 @@ const History = () => {
       });
 
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartReturn")
+      .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartReturn")
       .then(function (response) {
         // handle success
         setHistorySparepartReturn(response.data);

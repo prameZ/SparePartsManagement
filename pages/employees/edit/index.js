@@ -65,7 +65,7 @@ const EditDataOfTheEmployees = () => {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getEmployees")
+      .get("https://db-spare-parts-vercel.vercel.app/getEmployees")
       .then(function (response) {
         // handle success
         setCheckNickname(response.data);
@@ -169,12 +169,12 @@ const EditDataOfTheEmployees = () => {
       try {
         // Find EmpSubID
         await axios.post(
-          "https://blush-seahorse-boot.cyclic.app/findIDEmployees",
+          "https://db-spare-parts-vercel.vercel.app/findIDEmployees",
           ObjectDataEmpSubID
         );
 
         // Update Data
-        await axios.post("https://blush-seahorse-boot.cyclic.app/updateEmployees", EditData);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/updateEmployees", EditData);
         console.log("UpdateData to Employees Success");
         // if (EmployeesRole !== "พนักงานทั่วไป") {
         //   router.push("/employees/");

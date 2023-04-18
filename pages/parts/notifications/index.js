@@ -44,7 +44,7 @@ export function Notifications() {
 
   useEffect(() => {
     axios
-      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+      .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
       .then(function (response) {
         // handle success
         // console.log("Data Sparepart", response.data);
@@ -101,10 +101,10 @@ export function Notifications() {
 
     if (InputRequisition !== 0) {
       try {
-        await axios.post("https://blush-seahorse-boot.cyclic.app/findIDSpareparts", ObjectPartSubID);
-        await axios.post("https://blush-seahorse-boot.cyclic.app/updateSpareparts", DataAddAmount);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDSpareparts", ObjectPartSubID);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/updateSpareparts", DataAddAmount);
         axios
-          .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
+          .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
           .then(function (response) {
             setSparepart(response.data);
           })
