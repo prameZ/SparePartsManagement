@@ -44,26 +44,20 @@ const Login = () => {
     setBtnSubmit(true);
 
     try {
-      await axios
-        .post("https://blush-seahorse-boot.cyclic.app/login", {
-          Username,
-          Password,
-        })
-        .then((res) => {
-          if (res.data == "exist") {
-            router.push("/");
-            setLogin(Username);
-          } else if (res.data == "notexist") {
-            // alert("Username and Password not correct");
-            setAlartUsernamePassword(false);
-            setAlartLoading(true);
-            setBtnSubmit(false);
-          }
-        })
-        .catch((e) => {
-          alert("wrong details");
-          console.log(e);
-        });
+      await axios.post("https://blush-seahorse-boot.cyclic.app/login", {
+        Username,
+        Password,
+      });
+
+      if (res.data == "exist") {
+        router.push("/");
+        setLogin(Username);
+      } else if (res.data == "notexist") {
+        // alert("Username and Password not correct");
+        setAlartUsernamePassword(false);
+        setAlartLoading(true);
+        setBtnSubmit(false);
+      }
     } catch (error) {
       console.log("Login error", error);
     }
