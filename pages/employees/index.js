@@ -64,7 +64,7 @@ export default function DataOfTheEmployees() {
   useEffect(() => {
     // Data GeneralClerk
     axios
-      .get("http://[::1]:8000/getEmployeeGeneralClerk")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         setGeneralClerk(response.data);
@@ -80,7 +80,7 @@ export default function DataOfTheEmployees() {
 
     // Data WarehouseClerk
     axios
-      .get("http://[::1]:8000/getEmployeeWarehouseClerk")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeWarehouseClerk")
       .then(function (response) {
         // handle success
         setWarehouseClerk(response.data);
@@ -178,12 +178,12 @@ export default function DataOfTheEmployees() {
     if (Role === "พนักงานทั่วไป") {
       try {
         await axios.post(
-          "http://[::1]:8000/deleteEmployees",
+          "https://blush-seahorse-boot.cyclic.app/deleteEmployees",
           ObjectDataEmpSubID
         );
         console.log("DeleteData to GeneralClerk Success");
         axios
-          .get("http://[::1]:8000/getEmployeeGeneralClerk")
+          .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
           .then(function (response) {
             // handle success
             setGeneralClerk(response.data);
@@ -204,12 +204,12 @@ export default function DataOfTheEmployees() {
     } else if (Role === "พนักงานคลัง") {
       try {
         await axios.post(
-          "http://[::1]:8000/deleteEmployees",
+          "https://blush-seahorse-boot.cyclic.app/deleteEmployees",
           ObjectDataEmpSubID
         );
         console.log("DeleteData to WarehouseClerk Success");
         axios
-          .get("http://[::1]:8000/getEmployeeWarehouseClerk")
+          .get("https://blush-seahorse-boot.cyclic.app/getEmployeeWarehouseClerk")
           .then(function (response) {
             // handle success
             setWarehouseClerk(response.data);

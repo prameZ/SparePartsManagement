@@ -44,7 +44,7 @@ const History = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/gethistorySparepartPickup")
+      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickup")
       .then(function (response) {
         // handle success
         setHistorySparepartPickup(response.data);
@@ -59,7 +59,7 @@ const History = () => {
       });
 
     axios
-      .get("http://[::1]:8000/gethistorySparepartReturn")
+      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartReturn")
       .then(function (response) {
         // handle success
         setHistorySparepartReturn(response.data);

@@ -23,7 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         // console.log("Data Sparepart", response.data);

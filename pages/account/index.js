@@ -62,7 +62,7 @@ const Account = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getEmployees")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployees")
       .then(function (response) {
         // handle success
         setCheckNickname(response.data);
@@ -170,10 +170,10 @@ const Account = () => {
     } else {
       try {
         // Find SubID
-        await axios.post("http://[::1]:8000/findIDEmployees", ObjectDataSubID);
+        await axios.post("https://blush-seahorse-boot.cyclic.app/findIDEmployees", ObjectDataSubID);
 
         // Update Data
-        await axios.post("http://[::1]:8000/updateEmployees", EditData);
+        await axios.post("https://blush-seahorse-boot.cyclic.app/updateEmployees", EditData);
         console.log("UpdateData to Employees Success");
         // if (EmployeesRole !== "พนักงานทั่วไป") {
         //   router.push("/employees/");

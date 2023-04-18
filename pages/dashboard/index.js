@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getEmployeeGeneralClerk")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         setGeneralClerk(response.data);
@@ -39,7 +39,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("http://[::1]:8000/getEmployeeWarehouseClerk")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeWarehouseClerk")
       .then(function (response) {
         // handle success
         setWarehouseClerk(response.data);
@@ -53,7 +53,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         setSparepart(response.data);
@@ -67,7 +67,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("http://[::1]:8000/getAllCategory")
+      .get("https://blush-seahorse-boot.cyclic.app/getAllCategory")
       .then(function (response) {
         // handle success
         setAllCategory(response.data);
@@ -81,7 +81,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("http://[::1]:8000/MonthofPickupAndReturn")
+      .get("https://blush-seahorse-boot.cyclic.app/MonthofPickupAndReturn")
       .then(function (response) {
         // handle success
         setMonthofPickupAndReturn(response.data);
@@ -95,7 +95,7 @@ const Dashboard = () => {
       });
 
     axios
-      .get("http://[::1]:8000/TheMostPickedPart")
+      .get("https://blush-seahorse-boot.cyclic.app/TheMostPickedPart")
       .then(function (response) {
         // handle success
         setTheMostPickedPart(response.data);

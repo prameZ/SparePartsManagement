@@ -45,7 +45,7 @@ const Login = () => {
 
     try {
       await axios
-        .post("http://[::1]:8000/login", {
+        .post("https://blush-seahorse-boot.cyclic.app/login", {
           Username,
           Password,
         })

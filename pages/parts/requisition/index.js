@@ -71,7 +71,7 @@ const Requisition = () => {
   useEffect(() => {
     // Data GeneralClerk
     axios
-      .get("http://[::1]:8000/getEmployeeGeneralClerk")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployeeGeneralClerk")
       .then(function (response) {
         // handle success
         // console.log("Data GeneralClerk", response.data);
@@ -87,7 +87,7 @@ const Requisition = () => {
 
     // Data SpareParts
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         // console.log("Data Sparepart", response.data);
@@ -225,16 +225,16 @@ const Requisition = () => {
       } else {
         try {
           await axios.post(
-            "http://[::1]:8000/findIDSpareparts",
+            "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
             ObjectPartSubID
           );
           await axios.post(
-            "http://[::1]:8000/updateSpareparts",
+            "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
             DataRequisition
           );
           // History
           await axios.post(
-            "http://[::1]:8000/historySparepartPickup",
+            "https://blush-seahorse-boot.cyclic.app/historySparepartPickup",
             DataHistoryRequisition
           );
           console.log("Requisition to SpareParts Success");

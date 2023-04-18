@@ -68,7 +68,7 @@ const CreateParts = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         setCheckPart(response.data);
@@ -249,7 +249,7 @@ const CreateParts = () => {
           Unit,
         };
         try {
-          await axios.post("http://[::1]:8000/addSparepart", DataWithNoImage);
+          await axios.post("https://blush-seahorse-boot.cyclic.app/addSparepart", DataWithNoImage);
           console.log("AddPartWithNoImage to Sparepart Success");
           router.push("/parts/");
           setAddPartSucces(true);
@@ -288,7 +288,7 @@ const CreateParts = () => {
             Unit,
           };
           try {
-            await axios.post("http://[::1]:8000/addSparepart", DataWithImage);
+            await axios.post("https://blush-seahorse-boot.cyclic.app/addSparepart", DataWithImage);
             console.log("AddPartWithImage to Sparepart Success");
             router.push("/parts/");
             setAddPartSucces(true);

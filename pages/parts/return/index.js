@@ -58,7 +58,7 @@ const ReturnParts = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/gethistorySparepartPickupAmountForReturn")
+      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickupAmountForReturn")
       .then(function (response) {
         // handle success
         setHistorySparepartPickup(response.data);
@@ -73,7 +73,7 @@ const ReturnParts = () => {
       });
 
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         setSparepart(response.data);
@@ -87,7 +87,7 @@ const ReturnParts = () => {
       });
 
     axios
-      .get("http://[::1]:8000/gethistorySparepartPickup")
+      .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickup")
       .then(function (response) {
         // handle success
         setHistorySparepartPickup2(response.data);
@@ -288,29 +288,29 @@ const ReturnParts = () => {
     if (InputAmountForReturn !== 0) {
       try {
         // Update Spareparts Amount
-        await axios.post("http://[::1]:8000/findIDSpareparts", ObjectPartSubID);
+        await axios.post("https://blush-seahorse-boot.cyclic.app/findIDSpareparts", ObjectPartSubID);
         await axios.post(
-          "http://[::1]:8000/updateSpareparts",
+          "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
           DataAmountReturn
         );
 
         // Update HistorySparepartPickup
         await axios.post(
-          "http://[::1]:8000/findIDSparepartPickup",
+          "https://blush-seahorse-boot.cyclic.app/findIDSparepartPickup",
           ObjectPartSubID2
         );
         await axios.post(
-          "http://[::1]:8000/updateSparepartPickup",
+          "https://blush-seahorse-boot.cyclic.app/updateSparepartPickup",
           DataAmountReturn2
         );
 
         // History Add
         await axios.post(
-          "http://[::1]:8000/historySparepartReturn",
+          "https://blush-seahorse-boot.cyclic.app/historySparepartReturn",
           DataHistoryReturn
         );
         axios
-          .get("http://[::1]:8000/gethistorySparepartPickupAmountForReturn")
+          .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickupAmountForReturn")
           .then(function (response) {
             // handle success
             setHistorySparepartPickup(response.data);
@@ -325,7 +325,7 @@ const ReturnParts = () => {
           });
 
         axios
-          .get("http://[::1]:8000/getSparepart")
+          .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
           .then(function (response) {
             // handle success
             setSparepart(response.data);
@@ -339,7 +339,7 @@ const ReturnParts = () => {
           });
 
         axios
-          .get("http://[::1]:8000/gethistorySparepartPickup")
+          .get("https://blush-seahorse-boot.cyclic.app/gethistorySparepartPickup")
           .then(function (response) {
             // handle success
             setHistorySparepartPickup2(response.data);

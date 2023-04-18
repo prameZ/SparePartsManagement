@@ -58,7 +58,7 @@ const CreateDataOfTheEmployees = () => {
   useEffect(() => {
     // axios get Data GeneralClerk
     axios
-      .get("http://[::1]:8000/getEmployees")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployees")
       .then(function (response) {
         // handle success
         setCheckEmployeesUsername(response.data);
@@ -159,7 +159,7 @@ const CreateDataOfTheEmployees = () => {
     } else if (AlartUsername === false) {
     } else {
       try {
-        await axios.post("http://[::1]:8000/addEmployees", DataEmployees);
+        await axios.post("https://blush-seahorse-boot.cyclic.app/addEmployees", DataEmployees);
         console.log("SaveData to Employees Success");
         router.push("/employees/");
         setAddEmpSucces(true)

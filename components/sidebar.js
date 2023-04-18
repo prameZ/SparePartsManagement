@@ -87,7 +87,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getEmployees")
+      .get("https://blush-seahorse-boot.cyclic.app/getEmployees")
       .then(function (response) {
         // handle success
         setEmployees(response.data);

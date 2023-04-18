@@ -86,7 +86,7 @@ const EditParts = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         setCheckPart(response.data);
@@ -311,11 +311,11 @@ const EditParts = () => {
         };
         try {
           await axios.post(
-            "http://[::1]:8000/findIDSpareparts",
+            "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
             ObjectPartSubID
           );
           await axios.post(
-            "http://[::1]:8000/updateSpareparts",
+            "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
             DataWithNoImage
           );
           // console.log("UpdatePartWithNoImage to Sparepart Success");
@@ -358,11 +358,11 @@ const EditParts = () => {
           };
           try {
             await axios.post(
-              "http://[::1]:8000/findIDSpareparts",
+              "https://blush-seahorse-boot.cyclic.app/findIDSpareparts",
               ObjectPartSubID
             );
             await axios.post(
-              "http://[::1]:8000/updateSpareparts",
+              "https://blush-seahorse-boot.cyclic.app/updateSpareparts",
               DataWithImage
             );
             // console.log("UpdatePartWithImage to Sparepart Success");

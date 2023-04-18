@@ -44,7 +44,7 @@ export function Notifications() {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getSparepart")
+      .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
       .then(function (response) {
         // handle success
         // console.log("Data Sparepart", response.data);
@@ -101,10 +101,10 @@ export function Notifications() {
 
     if (InputRequisition !== 0) {
       try {
-        await axios.post("http://[::1]:8000/findIDSpareparts", ObjectPartSubID);
-        await axios.post("http://[::1]:8000/updateSpareparts", DataAddAmount);
+        await axios.post("https://blush-seahorse-boot.cyclic.app/findIDSpareparts", ObjectPartSubID);
+        await axios.post("https://blush-seahorse-boot.cyclic.app/updateSpareparts", DataAddAmount);
         axios
-          .get("http://[::1]:8000/getSparepart")
+          .get("https://blush-seahorse-boot.cyclic.app/getSparepart")
           .then(function (response) {
             setSparepart(response.data);
           })

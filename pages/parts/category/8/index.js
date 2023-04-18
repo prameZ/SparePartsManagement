@@ -20,7 +20,7 @@ const Category1 = () => {
 
   useEffect(() => {
     axios
-      .get("http://[::1]:8000/getCategory8")
+      .get("https://blush-seahorse-boot.cyclic.app/getCategory8")
       .then(function (response) {
         // handle success
         // console.log("Data Category", response.data);
