@@ -8,6 +8,7 @@ import {
   EditEmployeeAtom,
   DeleteEmployeeAtom,
   LoginAtom,
+  DeleteEmpSuccesAtom,
 } from "../../recoil/RecoilForData";
 import {
   Card,
@@ -22,12 +23,14 @@ import {
   Dialog,
   DialogBody,
   DialogFooter,
+  Alert,
 } from "@material-tailwind/react";
 import {
   UserPlusIcon,
   UserMinusIcon,
   PencilIcon,
   QuestionMarkCircleIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/solid";
 import Head from "next/head";
 import Sidebar from "../../components/sidebar";
@@ -53,6 +56,10 @@ export default function DataOfTheEmployees() {
   // Modal Delete
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleOpenModalDelete = () => setOpenModalDelete(!openModalDelete);
+
+  // Emp page Alart
+  const [DeleteEmpSucces, setDeleteEmpSucces] =
+    useRecoilState(DeleteEmpSuccesAtom);
 
   useEffect(() => {
     // Data GeneralClerk
@@ -111,7 +118,7 @@ export default function DataOfTheEmployees() {
     Surname,
     Username,
     Password,
-    SubID,
+    EmpSubID,
     Role,
     NickName
   ) => {
@@ -120,7 +127,7 @@ export default function DataOfTheEmployees() {
       Surname,
       Username,
       Password,
-      SubID,
+      EmpSubID,
       Role,
       NickName,
     };
@@ -133,7 +140,7 @@ export default function DataOfTheEmployees() {
     Surname,
     Username,
     Password,
-    SubID,
+    EmpSubID,
     Role,
     NickName
   ) => {
@@ -142,7 +149,7 @@ export default function DataOfTheEmployees() {
       Surname,
       Username,
       Password,
-      SubID,
+      EmpSubID,
       Role,
       NickName,
     };
@@ -151,26 +158,29 @@ export default function DataOfTheEmployees() {
   };
 
   // Delete
-  const DeleteForGeneralClerk = (Name, Surname, SubID, Role) => {
-    const DataForEdit = { Name, Surname, SubID, Role };
+  const DeleteForGeneralClerk = (Name, Surname, EmpSubID, Role) => {
+    const DataForEdit = { Name, Surname, EmpSubID, Role };
     setDeleteEmployee(DataForEdit);
     handleOpenModalDelete();
   };
 
-  const DeleteForWarehouseClerk = (Name, Surname, SubID, Role) => {
-    const DataForEdit = { Name, Surname, SubID, Role };
+  const DeleteForWarehouseClerk = (Name, Surname, EmpSubID, Role) => {
+    const DataForEdit = { Name, Surname, EmpSubID, Role };
     setDeleteEmployee(DataForEdit);
     handleOpenModalDelete();
   };
 
   const SubmitDelete = async (e) => {
     e.preventDefault();
-    let DataSubID = DeleteEmployee.SubID;
-    let ObjectDataSubID = { DataSubID };
+    let DataEmpSubID = DeleteEmployee.EmpSubID;
+    let ObjectDataEmpSubID = { DataEmpSubID };
     let Role = DeleteEmployee.Role;
     if (Role === "พนักงานทั่วไป") {
       try {
-        await axios.post("http://[::1]:8000/deleteEmployees", ObjectDataSubID);
+        await axios.post(
+          "http://[::1]:8000/deleteEmployees",
+          ObjectDataEmpSubID
+        );
         console.log("DeleteData to GeneralClerk Success");
         axios
           .get("http://[::1]:8000/getEmployeeGeneralClerk")
@@ -187,12 +197,16 @@ export default function DataOfTheEmployees() {
             // always executed
           });
         handleOpenModalDelete();
+        setDeleteEmpSucces(true);
       } catch (error) {
         console.log("DeleteData GeneralClerk Error", error);
       }
     } else if (Role === "พนักงานคลัง") {
       try {
-        await axios.post("http://[::1]:8000/deleteEmployees", ObjectDataSubID);
+        await axios.post(
+          "http://[::1]:8000/deleteEmployees",
+          ObjectDataEmpSubID
+        );
         console.log("DeleteData to WarehouseClerk Success");
         axios
           .get("http://[::1]:8000/getEmployeeWarehouseClerk")
@@ -255,26 +269,21 @@ export default function DataOfTheEmployees() {
                 <table className="w-full min-w-[640px] table-auto">
                   <thead>
                     <tr>
-                      {[
-                        "ชื่อ",
-                        "นามสกุล",
-                        "ชื่อเล่น",
-                        "ชื่อผู้ใช้งาน",
-                        "รหัสผ่าน",
-                        "",
-                      ].map((el) => (
-                        <th
-                          key={el}
-                          className="border-b border-blue-gray-50 py-3 pl-12 text-left"
-                        >
-                          <Typography
-                            variant="small"
-                            className="text-[11px] font-bold uppercase text-blue-600"
+                      {["ชื่อ", "นามสกุล", "ชื่อผู้ใช้งาน", "ชื่อเล่น", ""].map(
+                        (el) => (
+                          <th
+                            key={el}
+                            className="border-b border-blue-gray-50 py-3 pl-12 text-left"
                           >
-                            {el}
-                          </Typography>
-                        </th>
-                      ))}
+                            <Typography
+                              variant="small"
+                              className="text-[11px] font-bold uppercase text-blue-600"
+                            >
+                              {el}
+                            </Typography>
+                          </th>
+                        )
+                      )}
                     </tr>
                   </thead>
 
@@ -288,7 +297,7 @@ export default function DataOfTheEmployees() {
                               Surname,
                               Username,
                               Password,
-                              SubID,
+                              EmpSubID,
                               Role,
                               NickName,
                             },
@@ -316,19 +325,13 @@ export default function DataOfTheEmployees() {
 
                                 <td className={className}>
                                   <Typography className="text-xs font-semibold text-blue-gray-600">
-                                    {NickName}
-                                  </Typography>
-                                </td>
-
-                                <td className={className}>
-                                  <Typography className="text-xs font-semibold text-blue-gray-600">
                                     {Username}
                                   </Typography>
                                 </td>
 
                                 <td className={className}>
                                   <Typography className="text-xs font-semibold text-blue-gray-600">
-                                    {Password}
+                                    {NickName}
                                   </Typography>
                                 </td>
 
@@ -348,7 +351,7 @@ export default function DataOfTheEmployees() {
                                             Surname,
                                             Username,
                                             Password,
-                                            SubID,
+                                            EmpSubID,
                                             Role,
                                             NickName
                                           )
@@ -364,7 +367,7 @@ export default function DataOfTheEmployees() {
                                             DeleteForWarehouseClerk(
                                               Name,
                                               Surname,
-                                              SubID,
+                                              EmpSubID,
                                               Role
                                             )
                                           }
@@ -446,9 +449,8 @@ export default function DataOfTheEmployees() {
                                   {[
                                     "ชื่อ",
                                     "นามสกุล",
-                                    "ชื่อเล่น",
                                     "ชื่อผู้ใช้งาน",
-                                    "รหัสผ่าน",
+                                    "ชื่อเล่น",
                                     "",
                                   ].map((el) => (
                                     <th
@@ -476,7 +478,7 @@ export default function DataOfTheEmployees() {
                                           Surname,
                                           Username,
                                           Password,
-                                          SubID,
+                                          EmpSubID,
                                           Role,
                                           NickName,
                                         },
@@ -504,19 +506,13 @@ export default function DataOfTheEmployees() {
 
                                             <td className={className}>
                                               <Typography className="text-xs font-semibold text-blue-gray-600">
-                                                {NickName}
-                                              </Typography>
-                                            </td>
-
-                                            <td className={className}>
-                                              <Typography className="text-xs font-semibold text-blue-gray-600">
                                                 {Username}
                                               </Typography>
                                             </td>
 
                                             <td className={className}>
                                               <Typography className="text-xs font-semibold text-blue-gray-600">
-                                                {Password}
+                                                {NickName}
                                               </Typography>
                                             </td>
 
@@ -536,7 +532,7 @@ export default function DataOfTheEmployees() {
                                                         Surname,
                                                         Username,
                                                         Password,
-                                                        SubID,
+                                                        EmpSubID,
                                                         Role,
                                                         NickName
                                                       )
@@ -551,7 +547,7 @@ export default function DataOfTheEmployees() {
                                                       DeleteForGeneralClerk(
                                                         Name,
                                                         Surname,
-                                                        SubID,
+                                                        EmpSubID,
                                                         Role
                                                       )
                                                     }

@@ -17,7 +17,11 @@ import { useRecoilState } from "recoil";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
-import { EditPartAtom, LoginAtom } from "../../../recoil/RecoilForData";
+import {
+  EditPartAtom,
+  LoginAtom,
+  EditPartSuccesAtom,
+} from "../../../recoil/RecoilForData";
 import Head from "next/head";
 
 const EditParts = () => {
@@ -54,8 +58,8 @@ const EditParts = () => {
   const [AlartPartCode, setAlartPartCode] = useState(true);
   const [AlartPartCodeThai, setAlartPartCodeThai] = useState(true);
 
-  // SubID
-  const [SubID, setSubID] = useState();
+  // PartSubID
+  const [PartSubID, setPartSubID] = useState();
 
   // GetData
   const [CheckPart, setCheckPart] = useState();
@@ -69,6 +73,10 @@ const EditParts = () => {
 
   // Dialog
   const [EditPartDialog, setEditPartDialog] = useState(true);
+
+  // Parts Page Alart
+  const [EditPartSucces, setEditPartSucces] =
+    useRecoilState(EditPartSuccesAtom);
 
   useEffect(() => {
     if (Login === "") {
@@ -104,8 +112,8 @@ const EditParts = () => {
       setStringPartAlartQuantity(String(EditPart.Amountalart));
       setUnit(EditPart.Unit);
 
-      // SubID
-      setSubID(EditPart.SubID);
+      // PartSubID
+      setPartSubID(EditPart.PartSubID);
     }
   }, [EditPartDialog]);
 
@@ -272,8 +280,8 @@ const EditParts = () => {
     // window.location.reload();
     let Amountalart = parseInt(StringPartAlartQuantity);
     let Amount = parseInt(StringPartQuantity);
-    let DataSubID = EditPart.SubID;
-    let ObjectSubID = { DataSubID };
+    let DataPartSubID = EditPart.PartSubID;
+    let ObjectPartSubID = { DataPartSubID };
     if (selectedImage === undefined) {
       if (PartName === "") {
         setRequirePartName(true);
@@ -289,7 +297,7 @@ const EditParts = () => {
       } else if (AlartPartCode === false) {
       } else {
         const DataWithNoImage = {
-          // SubID: uuidv4(),
+          // PartSubID: uuidv4(),
           PartName,
           Category,
           PartCode,
@@ -302,7 +310,10 @@ const EditParts = () => {
           Unit,
         };
         try {
-          await axios.post("http://[::1]:8000/findIDSpareparts", ObjectSubID);
+          await axios.post(
+            "http://[::1]:8000/findIDSpareparts",
+            ObjectPartSubID
+          );
           await axios.post(
             "http://[::1]:8000/updateSpareparts",
             DataWithNoImage
@@ -310,6 +321,7 @@ const EditParts = () => {
           // console.log("UpdatePartWithNoImage to Sparepart Success");
           console.log("UpdatePart to Sparepart Success");
           router.push("/parts/");
+          setEditPartSucces(true);
         } catch (error) {
           // console.log("UpdatePartWithNoImage to Sparepart Error", error);
           console.log("UpdatePart to Sparepart Not Success");
@@ -332,7 +344,7 @@ const EditParts = () => {
         if (CatchAxiosFromIMG === false) {
           let fileData = await toBase64(selectedImage);
           const DataWithImage = {
-            // SubID: uuidv4(),
+            // PartSubID: uuidv4(),
             PartName,
             Category,
             PartCode,
@@ -345,7 +357,10 @@ const EditParts = () => {
             Unit,
           };
           try {
-            await axios.post("http://[::1]:8000/findIDSpareparts", ObjectSubID);
+            await axios.post(
+              "http://[::1]:8000/findIDSpareparts",
+              ObjectPartSubID
+            );
             await axios.post(
               "http://[::1]:8000/updateSpareparts",
               DataWithImage
@@ -353,6 +368,7 @@ const EditParts = () => {
             // console.log("UpdatePartWithImage to Sparepart Success");
             console.log("UpdatePart to Sparepart Success");
             router.push("/parts/");
+            setEditPartSucces(true);
           } catch (error) {
             // console.log("UpdatePartWithImage to Sparepart Error", error);
             console.log("UpdatePart to Sparepart Not Success");

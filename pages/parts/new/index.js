@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { NoImageBase64Atom } from "../../../recoil/NoImageBase64";
-import { LoginAtom } from "../../../recoil/RecoilForData";
+import { LoginAtom, AddPartSuccesAtom } from "../../../recoil/RecoilForData";
 import { useRecoilState } from "recoil";
 import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
@@ -56,6 +56,9 @@ const CreateParts = () => {
 
   // GetData
   const [CheckPart, setCheckPart] = useState();
+
+  // Parts Page Alart
+  const [AddPartSucces, setAddPartSucces] = useRecoilState(AddPartSuccesAtom);
 
   useEffect(() => {
     if (Login === "") {
@@ -233,7 +236,7 @@ const CreateParts = () => {
       } else if (AlartPartCodeThai === false) {
       } else {
         const DataWithNoImage = {
-          SubID: uuidv4(),
+          PartSubID: uuidv4(),
           PartName,
           Category,
           PartCode,
@@ -249,6 +252,7 @@ const CreateParts = () => {
           await axios.post("http://[::1]:8000/addSparepart", DataWithNoImage);
           console.log("AddPartWithNoImage to Sparepart Success");
           router.push("/parts/");
+          setAddPartSucces(true);
         } catch (error) {
           console.log("AddPartWithNoImage to Sparepart Error", error);
         }
@@ -271,7 +275,7 @@ const CreateParts = () => {
         if (CatchAxiosFromIMG === false) {
           let fileData = await toBase64(selectedImage);
           const DataWithImage = {
-            SubID: uuidv4(),
+            PartSubID: uuidv4(),
             PartName,
             Category,
             PartCode,
@@ -287,6 +291,7 @@ const CreateParts = () => {
             await axios.post("http://[::1]:8000/addSparepart", DataWithImage);
             console.log("AddPartWithImage to Sparepart Success");
             router.push("/parts/");
+            setAddPartSucces(true);
           } catch (error) {
             console.log("AddPartWithImage to Sparepart Error", error);
           }

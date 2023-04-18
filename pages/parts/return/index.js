@@ -17,7 +17,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import _ from "lodash";
 import { useRecoilState } from "recoil";
-import { ReturnPartsAtom } from "../../../recoil/RecoilForData";
+import {
+  ReturnPartsAtom,
+  ReturnPartSuccesAtom,
+} from "../../../recoil/RecoilForData";
 import Head from "next/head";
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -48,6 +51,10 @@ const ReturnParts = () => {
 
   const [RequiredInputAmountForReturn, setRequiredInputAmountForReturn] =
     useState(true);
+
+  // ReturnParts page Alart
+  const [ReturnPartSucces, setReturnPartSucces] =
+    useRecoilState(ReturnPartSuccesAtom);
 
   useEffect(() => {
     axios
@@ -130,7 +137,7 @@ const ReturnParts = () => {
     let arr = _.cloneDeep([...HistorySparepartPickup]);
     if (value !== "") {
       const results = arr.filter((item) => {
-        return item.NickName.toLowerCase().startsWith(value.toLowerCase());
+        return item.Forerunner.toLowerCase().startsWith(value.toLowerCase());
       });
       setHistorySparepartPickupDisplay(results);
       setDisplaySortItemPickUp("ปกติ");
@@ -141,7 +148,7 @@ const ReturnParts = () => {
   };
 
   const ReturnSpatepartFN = (
-    SubID,
+    PartSubID,
     Image,
     PartName,
     Category,
@@ -155,13 +162,13 @@ const ReturnParts = () => {
     sec,
     Status,
     Unit,
-    NickName,
+    Forerunner,
     AmountForReturn,
     RequisitionAmount,
-    SubIDRequisition
+    SparepartsPickupSubID
   ) => {
     let DataForReturnPart = {
-      SubID,
+      PartSubID,
       Image,
       PartName,
       Category,
@@ -175,10 +182,10 @@ const ReturnParts = () => {
       sec,
       Status,
       Unit,
-      NickName,
+      Forerunner,
       AmountForReturn,
       RequisitionAmount,
-      SubIDRequisition,
+      SparepartsPickupSubID,
     };
     setReturnParts(DataForReturnPart);
     handleOpenModalReturnParts();
@@ -210,11 +217,11 @@ const ReturnParts = () => {
   const SubmitReturn = async (e) => {
     e.preventDefault();
 
-    let DataSubID = ReturnParts.SubID;
-    let ObjectSubID = { DataSubID };
+    let DataPartSubID = ReturnParts.PartSubID;
+    let ObjectPartSubID = { DataPartSubID };
     // Update Sparepart Collection
     let arr = _.cloneDeep([...Sparepart]);
-    let filterPart = arr.filter((x) => x.SubID === ReturnParts.SubID);
+    let filterPart = arr.filter((x) => x.PartSubID === ReturnParts.PartSubID);
     let PartAmountOld = filterPart.map((x) => x.Amount);
     let PartAmountOldInt = parseInt(PartAmountOld);
     let Amount = PartAmountOldInt + InputAmountForReturn;
@@ -222,12 +229,12 @@ const ReturnParts = () => {
       Amount,
     };
 
-    let DataSubID2 = ReturnParts.SubIDRequisition;
-    let ObjectSubID2 = { DataSubID2 };
+    let DataPartSubID2 = ReturnParts.SparepartsPickupSubID;
+    let ObjectPartSubID2 = { DataPartSubID2 };
     // Update HistorySparepartPickup Collection
     let arr2 = _.cloneDeep([...HistorySparepartPickup2]);
     let filterPart2 = arr2.filter(
-      (x) => x.SubIDRequisition === ReturnParts.SubIDRequisition
+      (x) => x.SparepartsPickupSubID === ReturnParts.SparepartsPickupSubID
     );
     let AmountForReturnOld2 = filterPart2.map((x) => x.AmountForReturn);
     let AmountForReturnOldInt2 = parseInt(AmountForReturnOld2);
@@ -251,8 +258,8 @@ const ReturnParts = () => {
     let sec = d.getSeconds();
 
     const DataHistoryReturn = {
-      SubID: ReturnParts.SubID,
-      SubIDReturn: uuidv4(),
+      PartSubID: ReturnParts.SubID,
+      SparepartsReturnSubID: uuidv4(),
       PartName: ReturnParts.PartName,
       Category: ReturnParts.Category,
       Brand: ReturnParts.Brand,
@@ -275,13 +282,13 @@ const ReturnParts = () => {
       AmountForReturn: Amount2,
       RequisitionAmount: ReturnParts.RequisitionAmount,
       Status: "คืนพาร์ท",
-      NickName: ReturnParts.NickName,
+      Forerunner: ReturnParts.Forerunner,
     };
 
     if (InputAmountForReturn !== 0) {
       try {
         // Update Spareparts Amount
-        await axios.post("http://[::1]:8000/findIDSpareparts", ObjectSubID);
+        await axios.post("http://[::1]:8000/findIDSpareparts", ObjectPartSubID);
         await axios.post(
           "http://[::1]:8000/updateSpareparts",
           DataAmountReturn
@@ -290,7 +297,7 @@ const ReturnParts = () => {
         // Update HistorySparepartPickup
         await axios.post(
           "http://[::1]:8000/findIDSparepartPickup",
-          ObjectSubID2
+          ObjectPartSubID2
         );
         await axios.post(
           "http://[::1]:8000/updateSparepartPickup",
@@ -346,6 +353,7 @@ const ReturnParts = () => {
           });
         console.log("ReturnAmount to SpareParts Success");
         handleOpenModalReturnParts();
+        setReturnPartSucces(true);
       } catch (error) {
         console.log("ReturnAmount to SpareParts Error", error);
       }
@@ -488,7 +496,7 @@ const ReturnParts = () => {
                                     {HistorySparepartPickupDisplay.map(
                                       (
                                         {
-                                          SubID,
+                                          PartSubID,
                                           Image,
                                           PartName,
                                           Category,
@@ -503,9 +511,9 @@ const ReturnParts = () => {
                                           sec,
                                           Status,
                                           Unit,
-                                          NickName,
+                                          Forerunner,
                                           AmountForReturn,
-                                          SubIDRequisition,
+                                          SparepartsPickupSubID,
                                         },
                                         key
                                       ) => {
@@ -585,7 +593,7 @@ const ReturnParts = () => {
 
                                             <td className={className}>
                                               <Typography className="text-xs font-semibold text-blue-gray-600">
-                                                {NickName}
+                                                {Forerunner}
                                               </Typography>
                                             </td>
 
@@ -619,7 +627,7 @@ const ReturnParts = () => {
                                                     color="blue"
                                                     onClick={() =>
                                                       ReturnSpatepartFN(
-                                                        SubID,
+                                                        PartSubID,
                                                         Image,
                                                         PartName,
                                                         Category,
@@ -633,10 +641,10 @@ const ReturnParts = () => {
                                                         sec,
                                                         Status,
                                                         Unit,
-                                                        NickName,
+                                                        Forerunner,
                                                         AmountForReturn,
                                                         RequisitionAmount,
-                                                        SubIDRequisition
+                                                        SparepartsPickupSubID
                                                       )
                                                     }
                                                   >
@@ -744,7 +752,7 @@ const ReturnParts = () => {
             <span className="text-gray-800 font-bold flex flex-row truncate pb-2 pl-8">
               ผู้คืน :
               <p className="text-gray-600 font-normal truncate pl-2">
-                {ReturnParts.NickName}
+                {ReturnParts.Forerunner}
               </p>
             </span>
 

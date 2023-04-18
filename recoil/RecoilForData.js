@@ -67,3 +67,52 @@ export const testDataRequisituinAtom = atom({
   key: `testDataRequisituinAtom/${v1()}`,
   default: [],
 });
+
+// /////////////////////////////// EMP Page Alart ///////////////////////////////
+export const AddEmpSuccesAtom = atom({
+  key: `AddEmpSuccesAtom/${v1()}`,
+  default: false,
+});
+
+export const EditEmpSuccesAtom = atom({
+  key: `EditEmpSuccesAtom/${v1()}`,
+  default: false,
+});
+
+export const DeleteEmpSuccesAtom = atom({
+  key: `DeleteEmpSuccesAtom/${v1()}`,
+  default: false,
+});
+
+// /////////////////////////////// Parts Page Alart ///////////////////////////////
+export const AddPartSuccesAtom = atom({
+  key: `AddPartSuccesAtom/${v1()}`,
+  default: false,
+});
+
+export const EditPartSuccesAtom = atom({
+  key: `EditPartSuccesAtom/${v1()}`,
+  default: false,
+});
+
+export const DeletePartSuccesAtom = atom({
+  key: `DeletePartSuccesAtom/${v1()}`,
+  default: false,
+});
+
+export const RequisitionPartSuccesAtom = atom({
+  key: `RequisitionPartSuccesAtom/${v1()}`,
+  default: false,
+});
+
+// /////////////////////////////// notifications page Alart ///////////////////////////////
+export const AddAmountPartSuccesAtom = atom({
+  key: `AddAmountPartSuccesAtom/${v1()}`,
+  default: false,
+});
+
+// /////////////////////////////// ReturnParts page Alart ///////////////////////////////
+export const ReturnPartSuccesAtom = atom({
+  key: `ReturnPartSuccesAtom/${v1()}`,
+  default: false,
+});

@@ -11,7 +11,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { EditEmployeeAtom, LoginAtom } from "../../../recoil/RecoilForData";
+import {
+  EditEmployeeAtom,
+  LoginAtom,
+  EditEmpSuccesAtom,
+} from "../../../recoil/RecoilForData";
 import Head from "next/head";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
@@ -25,8 +29,8 @@ const EditDataOfTheEmployees = () => {
 
   const [CheckNickname, setCheckNickname] = useState();
 
-  // SubID
-  const [SubID, setSubID] = useState();
+  // EmpSubID
+  const [EmpSubID, setEmpSubID] = useState();
 
   const [RequireName, setRequireName] = useState(false);
   const [RequireSurname, setRequireSurname] = useState(false);
@@ -49,6 +53,9 @@ const EditDataOfTheEmployees = () => {
 
   const [Employees, setEmployees] = useState();
   // const [EmployeesRole, setEmployeesRole] = useState("");
+
+  // Emp page Alart
+  const [EditEmpSucces, setEditEmpSucces] = useRecoilState(EditEmpSuccesAtom);
 
   useEffect(() => {
     if (Login === "") {
@@ -92,8 +99,8 @@ const EditDataOfTheEmployees = () => {
       setRole(EditEmployee.Role);
       // setid(EditEmployee._id);
 
-      // SubID
-      setSubID(EditEmployee.SubID);
+      // EmpSubID
+      setEmpSubID(EditEmployee.EmpSubID);
     }
   }, [EditEmployeeDialog]);
 
@@ -136,8 +143,8 @@ const EditDataOfTheEmployees = () => {
 
   const EditData = async (e) => {
     e.preventDefault();
-    let DataSubID = EditEmployee.SubID;
-    let ObjectDataSubID = { DataSubID };
+    let DataEmpSubID = EditEmployee.EmpSubID;
+    let ObjectDataEmpSubID = { DataEmpSubID };
     const EditData = {
       Name,
       Surname,
@@ -145,7 +152,7 @@ const EditDataOfTheEmployees = () => {
       Username,
       Password,
       // Role,
-      // SubID,
+      // EmpSubID,
     };
 
     if (Name === "") {
@@ -160,8 +167,11 @@ const EditDataOfTheEmployees = () => {
       setRequirePassword(true);
     } else {
       try {
-        // Find SubID
-        await axios.post("http://[::1]:8000/findIDEmployees", ObjectDataSubID);
+        // Find EmpSubID
+        await axios.post(
+          "http://[::1]:8000/findIDEmployees",
+          ObjectDataEmpSubID
+        );
 
         // Update Data
         await axios.post("http://[::1]:8000/updateEmployees", EditData);
@@ -172,6 +182,7 @@ const EditDataOfTheEmployees = () => {
         //   router.push("/");
         // }
         router.push("/employees/");
+        setEditEmpSucces(true);
       } catch (error) {
         console.log("UpdateData Employees Error", error);
       }
@@ -271,17 +282,20 @@ const EditDataOfTheEmployees = () => {
               />
             </div>
 
-            <div className="pt-4 flex flex-row">
-              <Input
-                label="รหัสผ่าน"
-                type={PasswordHideShow}
-                onChange={(e) => setPassword(e.target.value)}
-                className="required:bg-red-100"
-                required={RequirePassword}
-                defaultValue={EditEmployee.Password}
-                maxLength={20}
-              />
-              {PasswordHideShow !== "" ? (
+            <div className="pt-4">
+              <p className="text-xs pl-2">รหัสผ่าน</p>
+              <div className="flex flex-row">
+                <Input
+                  label="รหัสผ่าน"
+                  type={PasswordHideShow}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="required:bg-red-100 disabled:bg-gray-300"
+                  required={RequirePassword}
+                  defaultValue={EditEmployee.Password}
+                  maxLength={20}
+                  disabled
+                />
+                {/* {PasswordHideShow !== "" ? (
                 <EyeSlashIcon
                   className="w-5 h-5 opacity-75 ml-2 mt-2"
                   onClick={() => setPasswordHideShow("")}
@@ -291,7 +305,8 @@ const EditDataOfTheEmployees = () => {
                   className="w-5 h-5 opacity-75 ml-2 mt-2"
                   onClick={() => setPasswordHideShow("password")}
                 />
-              )}
+              )} */}
+              </div>
             </div>
 
             <header className="border-b border-gray-300 rounded-md pt-4"></header>

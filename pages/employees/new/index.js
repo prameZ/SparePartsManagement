@@ -15,7 +15,7 @@ import _ from "lodash";
 import Head from "next/head";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
-import { LoginAtom } from "../../../recoil/RecoilForData";
+import { LoginAtom, AddEmpSuccesAtom } from "../../../recoil/RecoilForData";
 
 const CreateDataOfTheEmployees = () => {
   const [Name, setName] = useState("");
@@ -45,6 +45,9 @@ const CreateDataOfTheEmployees = () => {
 
   // Recoil
   const [Login, setLogin] = useRecoilState(LoginAtom);
+
+  // Emp page Alart
+  const [AddEmpSucces, setAddEmpSucces] = useRecoilState(AddEmpSuccesAtom);
 
   useEffect(() => {
     if (Login === "") {
@@ -141,7 +144,7 @@ const CreateDataOfTheEmployees = () => {
       Username,
       Password,
       Role,
-      SubID: uuidv4(),
+      EmpSubID: uuidv4(),
     };
     if (Name === "") {
       setRequireName(true);
@@ -159,6 +162,7 @@ const CreateDataOfTheEmployees = () => {
         await axios.post("http://[::1]:8000/addEmployees", DataEmployees);
         console.log("SaveData to Employees Success");
         router.push("/employees/");
+        setAddEmpSucces(true)
       } catch (error) {
         console.log("SaveData Employees Error", error);
       }

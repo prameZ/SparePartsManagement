@@ -17,6 +17,7 @@ import { useRecoilState } from "recoil";
 import {
   testDataRequisituinAtom,
   LoginAtom,
+  RequisitionPartSuccesAtom,
 } from "../../../recoil/RecoilForData";
 import { useRouter } from "next/router";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
@@ -40,10 +41,15 @@ const Requisition = () => {
   const [NoDataRequisition, setNoDataRequisition] = useState(false);
 
   // Hidden Alart NotFoundPartCodeAlart
-  const [NotFoundPartCodeAlart, setNotFoundPartCodeAlart] = useState(true);
+  const [NotFoundPartCodeAlart, setNotFoundPartCodeAlart] = useState(false);
 
   // SparepartAlart
   const [SparepartAlart, setSparepartAlart] = useState();
+
+  // RequisitionPartSucces
+  const [RequisitionPartSucces, setRequisitionPartSucces] = useRecoilState(
+    RequisitionPartSuccesAtom
+  );
 
   const router = useRouter();
 
@@ -125,7 +131,7 @@ const Requisition = () => {
 
     if (filterPartCode.length <= 0) {
       // alert("ไม่พบรหัสพาร์ทนี้");
-      setNotFoundPartCodeAlart(false);
+      setNotFoundPartCodeAlart(true);
     } else {
       let arrDataRequisituin = _.cloneDeep([...testDataRequisituin]);
       arrDataRequisituin.push({
@@ -139,8 +145,8 @@ const Requisition = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setNotFoundPartCodeAlart(true);
-    }, "5000");
+      setNotFoundPartCodeAlart(false);
+    }, "2000");
   }, [NotFoundPartCodeAlart]);
 
   const BarcodeScannerErrorFN = (e) => {
@@ -191,8 +197,8 @@ const Requisition = () => {
         (x) => x.PartCode === filterPartCodeUniqToString
       );
       const DataHistoryRequisition = {
-        SubID: FindPartData.SubID,
-        SubIDRequisition: uuidv4(),
+        PartSubID: FindPartData.PartSubID,
+        SparepartsPickupSubID: uuidv4(),
         PartName: FindPartData.PartName,
         Category: FindPartData.Category,
         Brand: FindPartData.Brand,
@@ -207,18 +213,21 @@ const Requisition = () => {
         min,
         sec,
         Status: "เบิกพาร์ท",
-        NickName: SelectEMP,
+        Forerunner: SelectEMP,
         AmountForReturn: SumAmount,
       };
 
       // Submit Data
-      let DataSubID = FindPartData.SubID;
-      let ObjectSubID = { DataSubID };
+      let DataPartSubID = FindPartData.PartSubID;
+      let ObjectPartSubID = { DataPartSubID };
       if (SelectEMP === "") {
         setRequiredEMP(true);
       } else {
         try {
-          await axios.post("http://[::1]:8000/findIDSpareparts", ObjectSubID);
+          await axios.post(
+            "http://[::1]:8000/findIDSpareparts",
+            ObjectPartSubID
+          );
           await axios.post(
             "http://[::1]:8000/updateSpareparts",
             DataRequisition
@@ -230,7 +239,9 @@ const Requisition = () => {
           );
           console.log("Requisition to SpareParts Success");
           settestDataRequisituin([]);
-          router.push("/");
+          setRequisitionPartSucces(true);
+          // router.push("/");
+          router.push("/parts/");
         } catch (error) {
           console.log("Requisition to SpareParts Error", error);
         }
@@ -240,7 +251,8 @@ const Requisition = () => {
 
   const ClosePageRequisition = () => {
     settestDataRequisituin([]);
-    router.push("/");
+    // router.push("/");
+    router.push("/parts/");
   };
 
   return (
@@ -266,14 +278,22 @@ const Requisition = () => {
           >
             ยืนยัน
           </Button>
+
+          <Alert
+            color="red"
+            className="fixed w-full top-2 text-center"
+            show={NotFoundPartCodeAlart}
+          >
+            ไม่พบรหัสพาร์ทนี้
+          </Alert>
         </nav>
 
-        <div
+        {/* <div
           className="flex w-full flex-col gap-2 text-center aria-hidden:hidden"
           aria-hidden={NotFoundPartCodeAlart}
         >
           <Alert color="red">ไม่พบรหัสพาร์ทนี้</Alert>
-        </div>
+        </div> */}
 
         <DialogBody className="flex justify-center overflow-x-auto bg-[#eceff1] overflow-y-scroll pb-12">
           <div className="w-[55rem] pb-12">
@@ -305,8 +325,25 @@ const Requisition = () => {
                     <option value="">---เลือกผู้เบิก---</option>;
                     {GeneralClerk.map((item, index) => {
                       return (
-                        <option key={index} value={item.NickName}>
-                          {item.NickName}
+                        <option
+                          key={index}
+                          value={
+                            item.Name +
+                            " " +
+                            item.Surname +
+                            " " +
+                            "(" +
+                            item.NickName +
+                            ")"
+                          }
+                        >
+                          {item.Name +
+                            " " +
+                            item.Surname +
+                            " " +
+                            "(" +
+                            item.NickName +
+                            ")"}
                         </option>
                       );
                     })}

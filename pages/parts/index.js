@@ -15,6 +15,7 @@ import {
   Dialog,
   DialogBody,
   DialogFooter,
+  Alert,
 } from "@material-tailwind/react";
 import {
   PencilIcon,
@@ -24,6 +25,7 @@ import {
   WrenchScrewdriverIcon,
   BellAlertIcon,
   BellIcon,
+  CheckCircleIcon,
 } from "@heroicons/react/24/solid";
 import _ from "lodash";
 import { useRecoilState } from "recoil";
@@ -32,6 +34,8 @@ import {
   DeletePartAtom,
   RequisitionAtom,
   BarcodeAtom,
+  DeletePartSuccesAtom,
+  RequisitionPartSuccesAtom,
 } from "../../recoil/RecoilForData";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -76,6 +80,13 @@ const DisplayParts = () => {
   const [RequiredEMP, setRequiredEMP] = useState(false);
   const [RequiredInputRequisition, setRequiredInputRequisition] =
     useState(true);
+
+  // Parts Page Alart
+  const [DeletePartSucces, setDeletePartSucces] =
+    useRecoilState(DeletePartSuccesAtom);
+  const [RequisitionPartSucces, setRequisitionPartSucces] = useRecoilState(
+    RequisitionPartSuccesAtom
+  );
 
   useEffect(() => {
     axios
@@ -146,7 +157,7 @@ const DisplayParts = () => {
   const router = useRouter();
 
   const EditSparepartFN = (
-    SubID,
+    PartSubID,
     Image,
     PartName,
     Category,
@@ -170,7 +181,7 @@ const DisplayParts = () => {
     }
 
     const DataForEdit = {
-      SubID,
+      PartSubID,
       Image,
       PartName,
       Category,
@@ -188,9 +199,9 @@ const DisplayParts = () => {
     router.push("/parts/edit/");
   };
 
-  const DeleteSpatepartFN = (SubID, PartName) => {
+  const DeleteSpatepartFN = (PartSubID, PartName) => {
     const DataForDelete = {
-      SubID,
+      PartSubID,
       PartName,
     };
     setDeletePart(DataForDelete);
@@ -198,7 +209,7 @@ const DisplayParts = () => {
   };
 
   const RequisitionFN = (
-    SubID,
+    PartSubID,
     PartName,
     Category,
     Brand,
@@ -208,7 +219,7 @@ const DisplayParts = () => {
     Image
   ) => {
     const DataForRequisition = {
-      SubID,
+      PartSubID,
       PartName,
       Category,
       Brand,
@@ -261,11 +272,11 @@ const DisplayParts = () => {
 
   const SubmitModalRequistion = async (e) => {
     e.preventDefault();
-    let DataSubID = Requisition.SubID;
-    let ObjectSubID = { DataSubID };
+    let DataPartSubID = Requisition.PartSubID;
+    let ObjectPartSubID = { DataPartSubID };
 
     let arr = _.cloneDeep([...Sparepart]);
-    let filterPart = arr.filter((x) => x.SubID === Requisition.SubID);
+    let filterPart = arr.filter((x) => x.PartSubID === Requisition.PartSubID);
     let PartAmountOld = filterPart.map((x) => x.Amount);
     let PartAmountOldInt = parseInt(PartAmountOld);
     let Amount = PartAmountOldInt - InputRequisition;
@@ -286,8 +297,8 @@ const DisplayParts = () => {
     let sec = d.getSeconds();
 
     const DataHistoryRequisition = {
-      SubID: Requisition.SubID,
-      SubIDRequisition: uuidv4(),
+      PartSubID: Requisition.PartSubID,
+      SparepartsPickupSubID: uuidv4(),
       PartName: Requisition.PartName,
       Category: Requisition.Category,
       Brand: Requisition.Brand,
@@ -302,7 +313,7 @@ const DisplayParts = () => {
       min,
       sec,
       Status: "เบิกพาร์ท",
-      NickName: SelectEMP,
+      Forerunner: SelectEMP,
       AmountForReturn: InputRequisition,
     };
 
@@ -311,7 +322,10 @@ const DisplayParts = () => {
     } else {
       if (InputRequisition !== 0) {
         try {
-          await axios.post("http://[::1]:8000/findIDSpareparts", ObjectSubID);
+          await axios.post(
+            "http://[::1]:8000/findIDSpareparts",
+            ObjectPartSubID
+          );
           await axios.post(
             "http://[::1]:8000/updateSpareparts",
             DataRequisition
@@ -338,6 +352,7 @@ const DisplayParts = () => {
             });
           console.log("Requisition to SpareParts Success");
           handleOpenModalRequistion();
+          setRequisitionPartSucces(true);
         } catch (error) {
           console.log("Requisition to SpareParts Error", error);
         }
@@ -351,11 +366,11 @@ const DisplayParts = () => {
   // Delete modal
   const SubmitDeleteParts = async (e) => {
     e.preventDefault();
-    let DataSubID = DeletePart.SubID;
-    let ObjectSubID = { DataSubID };
+    let DataPartSubID = DeletePart.PartSubID;
+    let ObjectPartSubID = { DataPartSubID };
 
     try {
-      await axios.post("http://[::1]:8000/deleteSpareparts", ObjectSubID);
+      await axios.post("http://[::1]:8000/deleteSpareparts", ObjectPartSubID);
       axios
         .get("http://[::1]:8000/getSparepart")
         .then(function (response) {
@@ -373,6 +388,7 @@ const DisplayParts = () => {
         });
       console.log("DeleteData to SpareParts Success");
       handleOpenModalDelete();
+      setDeletePartSucces(true);
     } catch (error) {
       console.log("DeleteData to SpareParts Error", error);
     }
@@ -554,7 +570,7 @@ const DisplayParts = () => {
                                 {SparepartDisplay.map(
                                   (
                                     {
-                                      SubID,
+                                      PartSubID,
                                       Image,
                                       PartName,
                                       Category,
@@ -670,7 +686,7 @@ const DisplayParts = () => {
                                                 className="flex flex-row"
                                                 onClick={() =>
                                                   RequisitionFN(
-                                                    SubID,
+                                                    PartSubID,
                                                     PartName,
                                                     Category,
                                                     Brand,
@@ -688,7 +704,7 @@ const DisplayParts = () => {
                                                 className="flex flex-row"
                                                 onClick={() =>
                                                   EditSparepartFN(
-                                                    SubID,
+                                                    PartSubID,
                                                     Image,
                                                     PartName,
                                                     Category,
@@ -709,7 +725,7 @@ const DisplayParts = () => {
                                                 className="flex flex-row"
                                                 onClick={() =>
                                                   DeleteSpatepartFN(
-                                                    SubID,
+                                                    PartSubID,
                                                     PartName
                                                   )
                                                 }
@@ -834,8 +850,25 @@ const DisplayParts = () => {
                       <option value="">---เลือกผู้เบิก---</option>;
                       {GeneralClerk.map((item, index) => {
                         return (
-                          <option key={index} value={item.NickName}>
-                            {item.NickName}
+                          <option
+                            key={index}
+                            value={
+                              item.Name +
+                              " " +
+                              item.Surname +
+                              " " +
+                              "(" +
+                              item.NickName +
+                              ")"
+                            }
+                          >
+                            {item.Name +
+                              " " +
+                              item.Surname +
+                              " " +
+                              "(" +
+                              item.NickName +
+                              ")"}
                           </option>
                         );
                       })}

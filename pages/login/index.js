@@ -21,6 +21,12 @@ const Login = () => {
   // AlartUsernamePassword
   const [AlartUsernamePassword, setAlartUsernamePassword] = useState(true);
 
+  // Loading
+  const [AlartLoading, setAlartLoading] = useState(true);
+
+  // btnSubmitHide
+  const [BtnSubmit, setBtnSubmit] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -34,6 +40,9 @@ const Login = () => {
 
   const LoginSubmit = async (e) => {
     e.preventDefault();
+    setAlartLoading(false);
+    setBtnSubmit(true);
+
     try {
       await axios
         .post("http://[::1]:8000/login", {
@@ -47,6 +56,8 @@ const Login = () => {
           } else if (res.data == "notexist") {
             // alert("Username and Password not correct");
             setAlartUsernamePassword(false);
+            setAlartLoading(true);
+            setBtnSubmit(false);
           }
         })
         .catch((e) => {
@@ -130,6 +141,15 @@ const Login = () => {
 
                 <div className="relative">
                   <p
+                    className="text-md text-center text-gray-600 aria-hidden:hidden"
+                    aria-hidden={AlartLoading}
+                  >
+                    Loading...
+                  </p>
+                </div>
+
+                <div className="relative">
+                  <p
                     className="text-sm text-red-600 aria-hidden:hidden"
                     aria-hidden={AlartUsernamePassword}
                   >
@@ -137,7 +157,10 @@ const Login = () => {
                   </p>
                 </div>
 
-                <div className="relative">
+                <div
+                  className="relative aria-hidden:hidden"
+                  aria-hidden={BtnSubmit}
+                >
                   <Button fullWidth onClick={LoginSubmit}>
                     ล็อคอิน
                   </Button>

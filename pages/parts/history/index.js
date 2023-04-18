@@ -81,7 +81,7 @@ const History = () => {
     let arr = _.cloneDeep([...HistorySparepartPickup]);
     if (value !== "") {
       const results = arr.filter((item) => {
-        return item.NickName.toLowerCase().startsWith(value.toLowerCase());
+        return item.Forerunner.toLowerCase().startsWith(value.toLowerCase());
       });
       setHistorySparepartPickupDisplay(results);
       setDisplaySortItemPickUp("ปกติ");
@@ -128,7 +128,7 @@ const History = () => {
     let arr = _.cloneDeep([...HistorySparepartReturn]);
     if (value !== "") {
       const results = arr.filter((item) => {
-        return item.NickName.toLowerCase().startsWith(value.toLowerCase());
+        return item.Forerunner.toLowerCase().startsWith(value.toLowerCase());
       });
       setHistorySparepartReturnDisplay(results);
       setDisplaySortItemReturn("ปกติ");
@@ -273,7 +273,7 @@ const History = () => {
                                   {HistorySparepartPickupDisplay.map(
                                     (
                                       {
-                                        SubID,
+                                        PartSubID,
                                         Image,
                                         PartName,
                                         Category,
@@ -288,9 +288,9 @@ const History = () => {
                                         sec,
                                         Status,
                                         Unit,
-                                        NickName,
+                                        Forerunner,
                                         AmountForReturn,
-                                        SubIDRequisition,
+                                        SparepartsPickupSubID,
                                       },
                                       key
                                     ) => {
@@ -370,7 +370,7 @@ const History = () => {
 
                                           <td className={className}>
                                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                                              {NickName}
+                                              {Forerunner}
                                             </Typography>
                                           </td>
 
@@ -539,7 +539,7 @@ const History = () => {
                                   {HistorySparepartReturnDisplay.map(
                                     (
                                       {
-                                        SubID,
+                                        PartSubID,
                                         Image,
                                         PartName,
                                         Category,
@@ -560,9 +560,9 @@ const History = () => {
                                         Oldsec,
                                         Status,
                                         Unit,
-                                        NickName,
+                                        Forerunner,
                                         AmountForReturn,
-                                        SubIDRequisition,
+                                        SparepartsPickupSubID,
                                         RequisitionAmount,
                                       },
                                       key
@@ -665,7 +665,7 @@ const History = () => {
 
                                           <td className={className}>
                                             <Typography className="text-xs font-semibold text-blue-gray-600">
-                                              {NickName}
+                                              {Forerunner}
                                             </Typography>
                                           </td>
 

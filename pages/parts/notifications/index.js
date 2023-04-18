@@ -13,7 +13,10 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { AddAmountAtom } from "../../../recoil/RecoilForData";
+import {
+  AddAmountAtom,
+  AddAmountPartSuccesAtom,
+} from "../../../recoil/RecoilForData";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/solid";
 import Head from "next/head";
 import Navbar from "../../../components/navbar";
@@ -33,6 +36,11 @@ export function Notifications() {
   const [AddAmount, setAddAmount] = useRecoilState(AddAmountAtom);
   const [InputRequisition, setInputRequisition] = useState();
   const [DisplayValueAmount, setDisplayValueAmount] = useState();
+
+  // notifications page Alart
+  const [AddAmountPartSucces, setAddAmountPartSucces] = useRecoilState(
+    AddAmountPartSuccesAtom
+  );
 
   useEffect(() => {
     axios
@@ -58,9 +66,9 @@ export function Notifications() {
     }
   }, [Sparepart]);
 
-  const AddAmountFN = (SubID, PartName, Category, Brand, Amount) => {
+  const AddAmountFN = (PartSubID, PartName, Category, Brand, Amount) => {
     let data = {
-      SubID,
+      PartSubID,
       PartName,
       Category,
       Brand,
@@ -83,8 +91,8 @@ export function Notifications() {
 
   const SubmitAmount = async (e) => {
     e.preventDefault();
-    let DataSubID = AddAmount.SubID;
-    let ObjectSubID = { DataSubID };
+    let DataPartSubID = AddAmount.PartSubID;
+    let ObjectPartSubID = { DataPartSubID };
     let Amount = InputRequisition + AddAmount.Amount;
 
     const DataAddAmount = {
@@ -93,7 +101,7 @@ export function Notifications() {
 
     if (InputRequisition !== 0) {
       try {
-        await axios.post("http://[::1]:8000/findIDSpareparts", ObjectSubID);
+        await axios.post("http://[::1]:8000/findIDSpareparts", ObjectPartSubID);
         await axios.post("http://[::1]:8000/updateSpareparts", DataAddAmount);
         axios
           .get("http://[::1]:8000/getSparepart")
@@ -109,6 +117,7 @@ export function Notifications() {
           });
         console.log("AddAmount to SpareParts Success");
         handleOpenAddamountModal();
+        setAddAmountPartSucces(true);
       } catch (error) {
         console.log("AddAmount to SpareParts Error", error);
       }
@@ -170,7 +179,7 @@ export function Notifications() {
                                 color="amber"
                                 onClick={() =>
                                   AddAmountFN(
-                                    item.SubID,
+                                    item.PartSubID,
                                     item.PartName,
                                     item.Category,
                                     item.Brand,
