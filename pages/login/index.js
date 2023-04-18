@@ -61,10 +61,7 @@ const Login = () => {
           }
         })
         .catch((e) => {
-          // alert("wrong details");
-          setAlartUsernamePassword(false);
-          setAlartLoading(true);
-          setBtnSubmit(false);
+          alert("wrong details");
           console.log(e);
         });
     } catch (error) {
