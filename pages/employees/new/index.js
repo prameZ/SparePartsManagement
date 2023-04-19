@@ -49,11 +49,11 @@ const CreateDataOfTheEmployees = () => {
   // Emp page Alart
   const [AddEmpSucces, setAddEmpSucces] = useRecoilState(AddEmpSuccesAtom);
 
-  // useEffect(() => {
-  //   if (Login === "") {
-  //     router.push("/login");
-  //   }
-  // }, [LoginAtom]);
+  useEffect(() => {
+    if (Login === "") {
+      router.push("/login");
+    }
+  }, [LoginAtom]);
 
   useEffect(() => {
     // axios get Data GeneralClerk

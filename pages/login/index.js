@@ -44,20 +44,26 @@ const Login = () => {
     setBtnSubmit(true);
 
     try {
-      await axios.post("https://db-spare-parts-vercel.vercel.app/login", {
-        Username,
-        Password,
-      });
-
-      if (res.data == "exist") {
-        router.push("/");
-        setLogin(Username);
-      } else if (res.data == "notexist") {
-        // alert("Username and Password not correct");
-        setAlartUsernamePassword(false);
-        setAlartLoading(true);
-        setBtnSubmit(false);
-      }
+      await axios
+        .post("https://db-spare-parts-vercel.vercel.app/login", {
+          Username,
+          Password,
+        })
+        .then((res) => {
+          if (res.data == "exist") {
+            router.push("/");
+            setLogin(Username);
+          } else if (res.data == "notexist") {
+            // alert("Username and Password not correct");
+            setAlartUsernamePassword(false);
+            setAlartLoading(true);
+            setBtnSubmit(false);
+          }
+        })
+        .catch((e) => {
+          alert("wrong details");
+          console.log(e);
+        });
     } catch (error) {
       console.log("Login error", error);
     }
