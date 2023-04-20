@@ -222,7 +222,10 @@ const Account = () => {
               </Link>
             )} */}
           <Link href="/">
-            <Button className="float-left ml-4 bg-gray-300 text-black">
+            <Button
+              className="float-left ml-4 bg-gray-300 text-black"
+              disabled={SaveBtn}
+            >
               X
             </Button>
           </Link>
