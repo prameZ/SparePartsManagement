@@ -25,8 +25,8 @@ const Account = () => {
 
   const [CheckNickname, setCheckNickname] = useState();
 
-  // SubID
-  const [SubID, setSubID] = useState();
+  // EmpSubID
+  const [EmpSubID, setEmpSubID] = useState();
 
   const [RequireName, setRequireName] = useState(false);
   const [RequireSurname, setRequireSurname] = useState(false);
@@ -96,8 +96,8 @@ const Account = () => {
       setRole(EditEmployee.Role);
       // setid(EditEmployee._id);
 
-      // SubID
-      setSubID(EditEmployee.SubID);
+      // EmpSubID
+      setEmpSubID(EditEmployee.EmpSubID);
     }
   }, [EditEmployeeDialog]);
 
@@ -145,8 +145,9 @@ const Account = () => {
 
   const EditData = async (e) => {
     e.preventDefault();
-    let DataSubID = EditEmployee.SubID;
-    let ObjectDataSubID = { DataSubID };
+    let DataEmpSubID = EditEmployee.EmpSubID;
+    let ObjectDataEmpSubID = { DataEmpSubID };
+    console.log(EditEmployee)
     const EditData = {
       Name,
       Surname,
@@ -154,7 +155,7 @@ const Account = () => {
       Username,
       Password,
       // Role,
-      // SubID,
+      // EmpSubID,
     };
 
     if (Name === "") {
@@ -170,7 +171,7 @@ const Account = () => {
     } else {
       try {
         // Find SubID
-        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDEmployees", ObjectDataSubID);
+        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDEmployees", ObjectDataEmpSubID);
 
         // Update Data
         await axios.post("https://db-spare-parts-vercel.vercel.app/updateEmployees", EditData);

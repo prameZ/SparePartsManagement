@@ -184,7 +184,7 @@ const Sidebar = () => {
     Surname,
     Username,
     Password,
-    SubID,
+    EmpSubID,
     Role,
     NickName
   ) => {
@@ -193,7 +193,7 @@ const Sidebar = () => {
       Surname,
       Username,
       Password,
-      SubID,
+      EmpSubID,
       Role,
       NickName,
     };
@@ -576,7 +576,7 @@ const Sidebar = () => {
                                   item.Surname,
                                   item.Username,
                                   item.Password,
-                                  item.SubID,
+                                  item.EmpSubID,
                                   item.Role,
                                   item.NickName
                                 )
