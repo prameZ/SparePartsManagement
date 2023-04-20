@@ -161,6 +161,7 @@ const CreateDataOfTheEmployees = () => {
       setRequirePassword(true);
     } else if (AlartUsername === false) {
     } else {
+      setSaveBtn(true);
       try {
         await axios.post(
           "https://db-spare-parts-vercel.vercel.app/addEmployees",
@@ -168,7 +169,6 @@ const CreateDataOfTheEmployees = () => {
         );
         console.log("SaveData to Employees Success");
         router.push("/employees/");
-        setSaveBtn(true);
         setAddEmpSucces(true);
       } catch (error) {
         console.log("SaveData Employees Error", error);
