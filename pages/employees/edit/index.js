@@ -57,6 +57,9 @@ const EditDataOfTheEmployees = () => {
   // Emp page Alart
   const [EditEmpSucces, setEditEmpSucces] = useRecoilState(EditEmpSuccesAtom);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     if (Login === "") {
       router.push("/login");
@@ -174,7 +177,10 @@ const EditDataOfTheEmployees = () => {
         );
 
         // Update Data
-        await axios.post("https://db-spare-parts-vercel.vercel.app/updateEmployees", EditData);
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/updateEmployees",
+          EditData
+        );
         console.log("UpdateData to Employees Success");
         // if (EmployeesRole !== "พนักงานทั่วไป") {
         //   router.push("/employees/");
@@ -182,6 +188,7 @@ const EditDataOfTheEmployees = () => {
         //   router.push("/");
         // }
         router.push("/employees/");
+        setSaveBtn(true);
         setEditEmpSucces(true);
       } catch (error) {
         console.log("UpdateData Employees Error", error);
@@ -216,7 +223,12 @@ const EditDataOfTheEmployees = () => {
             </Button>
           </Link>
 
-          <Button color="blue" className="float-right mr-4" onClick={EditData}>
+          <Button
+            color="blue"
+            className="float-right mr-4"
+            onClick={EditData}
+            disabled={SaveBtn}
+          >
             บันทึกข้อมูล
           </Button>
         </nav>

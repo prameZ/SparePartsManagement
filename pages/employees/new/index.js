@@ -49,6 +49,9 @@ const CreateDataOfTheEmployees = () => {
   // Emp page Alart
   const [AddEmpSucces, setAddEmpSucces] = useRecoilState(AddEmpSuccesAtom);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     if (Login === "") {
       router.push("/login");
@@ -159,10 +162,14 @@ const CreateDataOfTheEmployees = () => {
     } else if (AlartUsername === false) {
     } else {
       try {
-        await axios.post("https://db-spare-parts-vercel.vercel.app/addEmployees", DataEmployees);
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/addEmployees",
+          DataEmployees
+        );
         console.log("SaveData to Employees Success");
         router.push("/employees/");
-        setAddEmpSucces(true)
+        setSaveBtn(true);
+        setAddEmpSucces(true);
       } catch (error) {
         console.log("SaveData Employees Error", error);
       }
@@ -182,7 +189,12 @@ const CreateDataOfTheEmployees = () => {
               X
             </Button>
           </Link>
-          <Button color="blue" className="float-right mr-4" onClick={SaveData}>
+          <Button
+            color="blue"
+            className="float-right mr-4"
+            onClick={SaveData}
+            disabled={SaveBtn}
+          >
             บันทึกข้อมูล
           </Button>
         </nav>

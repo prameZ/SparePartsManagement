@@ -78,6 +78,9 @@ const EditParts = () => {
   const [EditPartSucces, setEditPartSucces] =
     useRecoilState(EditPartSuccesAtom);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     if (Login === "") {
       router.push("/login");
@@ -321,6 +324,7 @@ const EditParts = () => {
           // console.log("UpdatePartWithNoImage to Sparepart Success");
           console.log("UpdatePart to Sparepart Success");
           router.push("/parts/");
+          setSaveBtn(true);
           setEditPartSucces(true);
         } catch (error) {
           // console.log("UpdatePartWithNoImage to Sparepart Error", error);
@@ -391,7 +395,12 @@ const EditParts = () => {
               X
             </Button>
           </Link>
-          <Button color="blue" className="float-right mr-4" onClick={SaveData}>
+          <Button
+            color="blue"
+            className="float-right mr-4"
+            onClick={SaveData}
+            disabled={SaveBtn}
+          >
             บันทึกข้อมูล
           </Button>
         </nav>

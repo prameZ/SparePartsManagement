@@ -60,6 +60,9 @@ const CreateParts = () => {
   // Parts Page Alart
   const [AddPartSucces, setAddPartSucces] = useRecoilState(AddPartSuccesAtom);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     if (Login === "") {
       router.push("/login");
@@ -249,7 +252,10 @@ const CreateParts = () => {
           Unit,
         };
         try {
-          await axios.post("https://db-spare-parts-vercel.vercel.app/addSparepart", DataWithNoImage);
+          await axios.post(
+            "https://db-spare-parts-vercel.vercel.app/addSparepart",
+            DataWithNoImage
+          );
           console.log("AddPartWithNoImage to Sparepart Success");
           router.push("/parts/");
           setAddPartSucces(true);
@@ -288,9 +294,13 @@ const CreateParts = () => {
             Unit,
           };
           try {
-            await axios.post("https://db-spare-parts-vercel.vercel.app/addSparepart", DataWithImage);
+            await axios.post(
+              "https://db-spare-parts-vercel.vercel.app/addSparepart",
+              DataWithImage
+            );
             console.log("AddPartWithImage to Sparepart Success");
             router.push("/parts/");
+            setSaveBtn(true);
             setAddPartSucces(true);
           } catch (error) {
             console.log("AddPartWithImage to Sparepart Error", error);
@@ -313,7 +323,12 @@ const CreateParts = () => {
               X
             </Button>
           </Link>
-          <Button color="blue" className="float-right mr-4" onClick={SaveData}>
+          <Button
+            color="blue"
+            className="float-right mr-4"
+            onClick={SaveData}
+            disabled={SaveBtn}
+          >
             บันทึกข้อมูล
           </Button>
         </nav>
