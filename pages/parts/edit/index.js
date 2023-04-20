@@ -312,6 +312,7 @@ const EditParts = () => {
           Image: NoImage,
           Unit,
         };
+        setSaveBtn(true);
         try {
           await axios.post(
             "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
@@ -324,7 +325,6 @@ const EditParts = () => {
           // console.log("UpdatePartWithNoImage to Sparepart Success");
           console.log("UpdatePart to Sparepart Success");
           router.push("/parts/");
-          setSaveBtn(true);
           setEditPartSucces(true);
         } catch (error) {
           // console.log("UpdatePartWithNoImage to Sparepart Error", error);
@@ -360,6 +360,7 @@ const EditParts = () => {
             Image: fileData,
             Unit,
           };
+          setSaveBtn(true);
           try {
             await axios.post(
               "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
@@ -391,7 +392,10 @@ const EditParts = () => {
       <Dialog open={EditPartDialog} size="xxl" className="bg-white">
         <nav className="sticky top-0 z-50 bg-[#424242] py-2 shadow-xl">
           <Link href="/parts">
-            <Button className="float-left ml-4 bg-gray-300 text-black">
+            <Button
+              className="float-left ml-4 bg-gray-300 text-black"
+              disabled={SaveBtn}
+            >
               X
             </Button>
           </Link>

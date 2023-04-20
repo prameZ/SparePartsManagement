@@ -51,6 +51,9 @@ const Requisition = () => {
     RequisitionPartSuccesAtom
   );
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -223,6 +226,7 @@ const Requisition = () => {
       if (SelectEMP === "") {
         setRequiredEMP(true);
       } else {
+        setSaveBtn(true);
         try {
           await axios.post(
             "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
@@ -266,6 +270,7 @@ const Requisition = () => {
           <Button
             className="float-left ml-4 bg-gray-300 text-black"
             onClick={ClosePageRequisition}
+            disabled={SaveBtn}
           >
             X
           </Button>
@@ -275,6 +280,7 @@ const Requisition = () => {
             className="float-right mr-4 aria-hidden:hidden"
             onClick={Submit}
             aria-hidden={NoDataRequisition}
+            disabled={SaveBtn}
           >
             ยืนยัน
           </Button>
@@ -358,6 +364,7 @@ const Requisition = () => {
                 className="ml-4 h-10 aria-hidden:hidden"
                 onClick={DeleteAllDataRequistion}
                 aria-hidden={NoDataRequisition}
+                disabled={SaveBtn}
               >
                 ยกเลิกรายการทั้งหมด
               </Button>

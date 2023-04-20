@@ -61,6 +61,9 @@ export default function DataOfTheEmployees() {
   const [DeleteEmpSucces, setDeleteEmpSucces] =
     useRecoilState(DeleteEmpSuccesAtom);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     // Data GeneralClerk
     axios
@@ -161,12 +164,14 @@ export default function DataOfTheEmployees() {
   const DeleteForGeneralClerk = (Name, Surname, EmpSubID, Role) => {
     const DataForEdit = { Name, Surname, EmpSubID, Role };
     setDeleteEmployee(DataForEdit);
+    setSaveBtn(false);
     handleOpenModalDelete();
   };
 
   const DeleteForWarehouseClerk = (Name, Surname, EmpSubID, Role) => {
     const DataForEdit = { Name, Surname, EmpSubID, Role };
     setDeleteEmployee(DataForEdit);
+    setSaveBtn(false);
     handleOpenModalDelete();
   };
 
@@ -176,6 +181,7 @@ export default function DataOfTheEmployees() {
     let ObjectDataEmpSubID = { DataEmpSubID };
     let Role = DeleteEmployee.Role;
     if (Role === "พนักงานทั่วไป") {
+      setSaveBtn(true);
       try {
         await axios.post(
           "https://db-spare-parts-vercel.vercel.app/deleteEmployees",
@@ -183,7 +189,9 @@ export default function DataOfTheEmployees() {
         );
         console.log("DeleteData to GeneralClerk Success");
         axios
-          .get("https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk")
+          .get(
+            "https://db-spare-parts-vercel.vercel.app/getEmployeeGeneralClerk"
+          )
           .then(function (response) {
             // handle success
             setGeneralClerk(response.data);
@@ -202,6 +210,7 @@ export default function DataOfTheEmployees() {
         console.log("DeleteData GeneralClerk Error", error);
       }
     } else if (Role === "พนักงานคลัง") {
+      setSaveBtn(true);
       try {
         await axios.post(
           "https://db-spare-parts-vercel.vercel.app/deleteEmployees",
@@ -209,7 +218,9 @@ export default function DataOfTheEmployees() {
         );
         console.log("DeleteData to WarehouseClerk Success");
         axios
-          .get("https://db-spare-parts-vercel.vercel.app/getEmployeeWarehouseClerk")
+          .get(
+            "https://db-spare-parts-vercel.vercel.app/getEmployeeWarehouseClerk"
+          )
           .then(function (response) {
             // handle success
             setWarehouseClerk(response.data);
@@ -630,10 +641,16 @@ export default function DataOfTheEmployees() {
             color="red"
             className="mr-2"
             onClick={handleOpenModalDelete}
+            disabled={SaveBtn}
           >
             <span>ยกเลิก</span>
           </Button>
-          <Button variant="gradient" color="blue" onClick={SubmitDelete}>
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={SubmitDelete}
+            disabled={SaveBtn}
+          >
             <span>ยืนยัน</span>
           </Button>
         </DialogFooter>

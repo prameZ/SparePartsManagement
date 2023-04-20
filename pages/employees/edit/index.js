@@ -169,6 +169,7 @@ const EditDataOfTheEmployees = () => {
     } else if (Password === "") {
       setRequirePassword(true);
     } else {
+      setSaveBtn(true);
       try {
         // Find EmpSubID
         await axios.post(
@@ -188,7 +189,6 @@ const EditDataOfTheEmployees = () => {
         //   router.push("/");
         // }
         router.push("/employees/");
-        setSaveBtn(true);
         setEditEmpSucces(true);
       } catch (error) {
         console.log("UpdateData Employees Error", error);
@@ -218,7 +218,10 @@ const EditDataOfTheEmployees = () => {
             </Link>
           )} */}
           <Link href="/employees/">
-            <Button className="float-left ml-4 bg-gray-300 text-black">
+            <Button
+              className="float-left ml-4 bg-gray-300 text-black"
+              disabled={SaveBtn}
+            >
               X
             </Button>
           </Link>

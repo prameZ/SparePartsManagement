@@ -42,6 +42,12 @@ export function Notifications() {
     AddAmountPartSuccesAtom
   );
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
+  // NoInputAddAmount
+  const [NoInputAddAmount, setNoInputAddAmount] = useState(true);
+
   useEffect(() => {
     axios
       .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
@@ -66,6 +72,12 @@ export function Notifications() {
     }
   }, [Sparepart]);
 
+  useEffect(() => {
+    if (InputRequisition !== 0) {
+      setNoInputAddAmount(true);
+    }
+  }, [InputRequisition]);
+
   const AddAmountFN = (PartSubID, PartName, Category, Brand, Amount) => {
     let data = {
       PartSubID,
@@ -75,6 +87,7 @@ export function Notifications() {
       Amount,
     };
     setAddAmount(data);
+    setSaveBtn(false);
     handleOpenAddamountModal();
   };
 
@@ -100,9 +113,16 @@ export function Notifications() {
     };
 
     if (InputRequisition !== 0) {
+      setSaveBtn(true);
       try {
-        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDSpareparts", ObjectPartSubID);
-        await axios.post("https://db-spare-parts-vercel.vercel.app/updateSpareparts", DataAddAmount);
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
+          ObjectPartSubID
+        );
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
+          DataAddAmount
+        );
         axios
           .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
           .then(function (response) {
@@ -123,6 +143,7 @@ export function Notifications() {
       }
     } else {
       // console.log("No InputAddAmountRequire");
+      setNoInputAddAmount(false);
     }
   };
 
@@ -278,6 +299,13 @@ export function Notifications() {
                 จำนวนทั้งหมด {DisplayValueAmount} {AddAmount.Unit}
               </span>
             </div>
+
+            <p
+              className="text-sm text-red-600 truncate pt-2 pl-[95px] aria-hidden:hidden"
+              aria-hidden={NoInputAddAmount}
+            >
+              กรอกจำนวน
+            </p>
           </div>
         </DialogBody>
         <DialogFooter>
@@ -286,10 +314,16 @@ export function Notifications() {
             color="red"
             className="mr-2"
             onClick={() => handleOpenAddamountModal()}
+            disabled={SaveBtn}
           >
             <span>ยกเลิก</span>
           </Button>
-          <Button variant="gradient" color="blue" onClick={SubmitAmount}>
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={SubmitAmount}
+            disabled={SaveBtn}
+          >
             <span>ยืนยัน</span>
           </Button>
         </DialogFooter>

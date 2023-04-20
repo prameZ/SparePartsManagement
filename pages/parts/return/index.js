@@ -56,9 +56,14 @@ const ReturnParts = () => {
   const [ReturnPartSucces, setReturnPartSucces] =
     useRecoilState(ReturnPartSuccesAtom);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     axios
-      .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickupAmountForReturn")
+      .get(
+        "https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickupAmountForReturn"
+      )
       .then(function (response) {
         // handle success
         setHistorySparepartPickup(response.data);
@@ -188,6 +193,7 @@ const ReturnParts = () => {
       SparepartsPickupSubID,
     };
     setReturnParts(DataForReturnPart);
+    setSaveBtn(false);
     handleOpenModalReturnParts();
   };
 
@@ -286,9 +292,13 @@ const ReturnParts = () => {
     };
 
     if (InputAmountForReturn !== 0) {
+      setSaveBtn(true);
       try {
         // Update Spareparts Amount
-        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDSpareparts", ObjectPartSubID);
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
+          ObjectPartSubID
+        );
         await axios.post(
           "https://db-spare-parts-vercel.vercel.app/updateSpareparts",
           DataAmountReturn
@@ -310,7 +320,9 @@ const ReturnParts = () => {
           DataHistoryReturn
         );
         axios
-          .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickupAmountForReturn")
+          .get(
+            "https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickupAmountForReturn"
+          )
           .then(function (response) {
             // handle success
             setHistorySparepartPickup(response.data);
@@ -339,7 +351,9 @@ const ReturnParts = () => {
           });
 
         axios
-          .get("https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickup")
+          .get(
+            "https://db-spare-parts-vercel.vercel.app/gethistorySparepartPickup"
+          )
           .then(function (response) {
             // handle success
             setHistorySparepartPickup2(response.data);
@@ -806,10 +820,16 @@ const ReturnParts = () => {
             color="red"
             className="mr-2"
             onClick={closeModalReturn}
+            disabled={SaveBtn}
           >
             <span>ยกเลิก</span>
           </Button>
-          <Button variant="gradient" color="blue" onClick={SubmitReturn}>
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={SubmitReturn}
+            disabled={SaveBtn}
+          >
             <span>ยืนยัน</span>
           </Button>
         </DialogFooter>

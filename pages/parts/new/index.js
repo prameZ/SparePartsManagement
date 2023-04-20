@@ -251,6 +251,7 @@ const CreateParts = () => {
           Image: NoImage,
           Unit,
         };
+        setSaveBtn(true);
         try {
           await axios.post(
             "https://db-spare-parts-vercel.vercel.app/addSparepart",
@@ -293,6 +294,7 @@ const CreateParts = () => {
             Image: fileData,
             Unit,
           };
+          setSaveBtn(true);
           try {
             await axios.post(
               "https://db-spare-parts-vercel.vercel.app/addSparepart",
@@ -300,7 +302,6 @@ const CreateParts = () => {
             );
             console.log("AddPartWithImage to Sparepart Success");
             router.push("/parts/");
-            setSaveBtn(true);
             setAddPartSucces(true);
           } catch (error) {
             console.log("AddPartWithImage to Sparepart Error", error);
@@ -319,7 +320,10 @@ const CreateParts = () => {
       <Dialog open={true} size="xxl" className="bg-white">
         <nav className="sticky top-0 z-50 bg-[#424242] py-2 shadow-xl">
           <Link href="/parts">
-            <Button className="float-left ml-4 bg-gray-300 text-black">
+            <Button
+              className="float-left ml-4 bg-gray-300 text-black"
+              disabled={SaveBtn}
+            >
               X
             </Button>
           </Link>

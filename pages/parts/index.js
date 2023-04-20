@@ -88,6 +88,9 @@ const DisplayParts = () => {
     RequisitionPartSuccesAtom
   );
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     axios
       .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
@@ -205,6 +208,7 @@ const DisplayParts = () => {
       PartName,
     };
     setDeletePart(DataForDelete);
+    setSaveBtn(false);
     handleOpenModalDelete();
   };
 
@@ -229,6 +233,7 @@ const DisplayParts = () => {
       Image,
     };
     setRequisition(DataForRequisition);
+    setSaveBtn(false);
     handleOpenModalRequistion();
   };
 
@@ -321,6 +326,7 @@ const DisplayParts = () => {
       setRequiredEMP(true);
     } else {
       if (InputRequisition !== 0) {
+        setSaveBtn(true);
         try {
           await axios.post(
             "https://db-spare-parts-vercel.vercel.app/findIDSpareparts",
@@ -368,9 +374,12 @@ const DisplayParts = () => {
     e.preventDefault();
     let DataPartSubID = DeletePart.PartSubID;
     let ObjectPartSubID = { DataPartSubID };
-
+    setSaveBtn(true);
     try {
-      await axios.post("https://db-spare-parts-vercel.vercel.app/deleteSpareparts", ObjectPartSubID);
+      await axios.post(
+        "https://db-spare-parts-vercel.vercel.app/deleteSpareparts",
+        ObjectPartSubID
+      );
       axios
         .get("https://db-spare-parts-vercel.vercel.app/getSparepart")
         .then(function (response) {
@@ -920,6 +929,7 @@ const DisplayParts = () => {
             color="red"
             onClick={closeModalRequistion}
             className="mr-2"
+            disabled={SaveBtn}
           >
             <span>ยกเลิก</span>
           </Button>
@@ -930,6 +940,7 @@ const DisplayParts = () => {
               variant="gradient"
               color="blue"
               onClick={SubmitModalRequistion}
+              disabled={SaveBtn}
             >
               <span>ยืนยัน</span>
             </Button>
@@ -967,10 +978,16 @@ const DisplayParts = () => {
             color="red"
             className="mr-2"
             onClick={() => handleOpenModalDelete()}
+            disabled={SaveBtn}
           >
             <span>ยกเลิก</span>
           </Button>
-          <Button variant="gradient" color="blue" onClick={SubmitDeleteParts}>
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={SubmitDeleteParts}
+            disabled={SaveBtn}
+          >
             <span>ยืนยัน</span>
           </Button>
         </DialogFooter>
