@@ -54,6 +54,9 @@ const Account = () => {
   const [DisableEdit, setDisableEdit] = useState(true);
   const [DisableTitle, setDisableTitle] = useState(false);
 
+  // SaveBtn
+  const [SaveBtn, setSaveBtn] = useState(false);
+
   useEffect(() => {
     if (Login === "") {
       router.push("/login");
@@ -139,6 +142,7 @@ const Account = () => {
   const router = useRouter();
 
   const DisableEditData = () => {
+    setSaveBtn(false);
     setDisableEdit(false);
     setDisableTitle(true);
   };
@@ -147,7 +151,6 @@ const Account = () => {
     e.preventDefault();
     let DataEmpSubID = EditEmployee.EmpSubID;
     let ObjectDataEmpSubID = { DataEmpSubID };
-    console.log(EditEmployee)
     const EditData = {
       Name,
       Surname,
@@ -169,12 +172,19 @@ const Account = () => {
     } else if (Password === "") {
       setRequirePassword(true);
     } else {
+      setSaveBtn(true);
       try {
         // Find SubID
-        await axios.post("https://db-spare-parts-vercel.vercel.app/findIDEmployees", ObjectDataEmpSubID);
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/findIDEmployees",
+          ObjectDataEmpSubID
+        );
 
         // Update Data
-        await axios.post("https://db-spare-parts-vercel.vercel.app/updateEmployees", EditData);
+        await axios.post(
+          "https://db-spare-parts-vercel.vercel.app/updateEmployees",
+          EditData
+        );
         console.log("UpdateData to Employees Success");
         // if (EmployeesRole !== "พนักงานทั่วไป") {
         //   router.push("/employees/");
@@ -222,6 +232,7 @@ const Account = () => {
               color="blue"
               className="float-right mr-4"
               onClick={EditData}
+              disabled={SaveBtn}
             >
               บันทึกข้อมูล
             </Button>
