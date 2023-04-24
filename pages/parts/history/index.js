@@ -219,7 +219,7 @@ const History = () => {
                           <p className="text-center">"{SearchInputPickUp}"</p>
                         </CardBody>
                       ) : (
-                        <>
+                        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
                           {HistorySparepartPickupDisplay.length > 0 ? (
                             <>
                               <Menu placement="bottom-start">
@@ -408,7 +408,7 @@ const History = () => {
                               </p>
                             </div>
                           )}
-                        </>
+                        </CardBody>
                       )}
                     </>
                   ) : (
@@ -485,7 +485,7 @@ const History = () => {
                       ) : (
                         <>
                           {HistorySparepartReturnDisplay.length > 0 ? (
-                            <>
+                            <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
                               <Menu placement="bottom-start">
                                 <MenuHandler>
                                   <Typography className="text-md font-bold cursor-pointer hover:text-blue-600 w-64">
@@ -704,7 +704,7 @@ const History = () => {
                                   )}
                                 </tbody>
                               </table>
-                            </>
+                            </CardBody>
                           ) : (
                             <div className="px-0 pt-0 pb-2">
                               <div className="flex justify-center">
@@ -771,7 +771,7 @@ const History = () => {
                 </Typography>
               </CardHeader>
 
-              <CardBody className="overflow-x-scroll px-0 pt-2 pb-2">
+              <CardBody>
                 <Tabs value="PickUp">
                   <TabsHeader>
                     {data.map(({ label, value }) => (

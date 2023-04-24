@@ -321,7 +321,7 @@ const Dashboard = () => {
 
             <Typography
               variant="h3"
-              className="pb-4 px-4 drop-shadow-md pt-32 md:pt-0"
+              className="pb-4 px-4 drop-shadow-md mt-32 md:mt-0"
             >
               Dashboard
             </Typography>
