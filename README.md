@@ -74,7 +74,7 @@ yarn dev
 
   - จะสามารถเเก้ไขข้อมูลของผู้ใช้ที่ทำการเข้าสู่ระบบได้
   
-## git repo ของหลังบ้าน
+## git repo ของ Backend
 link : https://github.com/prameZ/DB-SpareParts-Vercel
 
 ## Deployment on vercel
