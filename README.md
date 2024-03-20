@@ -1,6 +1,7 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## โปรเจค ระบบบริหารจัดการคลังอะไหล่ (เป็นโปรเจคจบมหาวิทยาลัย)
+
+Getting Started
 
 First, run the development server:
 
@@ -10,27 +11,66 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## git repo นี้เป็นในส่วนของ Frontend
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- ใช้ Javascript, Next.js, Tailwind, Recoil ในการพัฒนาระบบ
+- เป็นโปรเจคเเรกที่ทำครั้งเเรก ซึ่งจะมีข้อผิดพลาดหรือองค์ประกอบที่ไม่ครบถ้วน ได้เเก่
+  1. ไม่มี login session
+  2. ในการทำ reponsive ของเว็บมีบางจุดที่มีข้อบกพร่อง
+  3. UI ของเว็บไม่ค่อยสวยเเละอาจใช้งานลำบาก
+  4. เรื่องของบัค
+  5. เรื่องของการเขียนโค้ด จะเห็นว่ามี code smell หลายจุด
+  6. ข้อมูลไม่ realtime
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Username เเละ Password สำหรับเข้าสู่ระบบ 
+ผู้ใช้ที่เป็นพนักงานคลัง
+```bash
+  Username : admin
+  Password : adminpassword
+```
+ผู้ใช้ที่เป็นพนักงานทั่วไป
+```bash
+  Username : test
+  Password : 1234
+```
+## ส่วนประกอบต่างๆของระบบ/หน้าเว็บ
+เข้าเว็บมาจะเข้าสู่หน้า Login ก่อน โดยจะเเบ่งออกเป็น 2 ตำเเหห่ง คือ 1.ผู้ใช้ที่เป็นพนักงานคลัง 2.ผู้ใช้ที่เป็นพนักงานทั่วไป
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+`หน้าหลัก` 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  - เเสดง ชื่อ, จำนวน, ตำเเหน่งจัดเก็บ
 
-## Learn More
+`หน้าหมวดหมู่พาร์ท`
 
-To learn more about Next.js, take a look at the following resources:
+  - ให้เลือกหมวดหมู่ที่ต้องการจาก sidebar จะเเบ่งออกเป็น 9 หมวดหมู่
+  
+`หน้า Dashboard`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - เป็นหน้ารายงานข้อมูล เช่น จำนวนพนักงานงาน, จำนวนอะไหล่, จำนวนการเบิกอะไหล่
+  
+`หน้าข้อมูลอะไหล่`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  - สามารถจัดการข้อมูลอะไหล่ได้ เช่น เพิ่ม, เเก้ไข, ลบ ข้อมูลอะไหล่ เบิกอะไหล่ เเละเเจ้งเตือนจำนวนอะไหล่ที่ใกล้หมดหรือหมด 
+  
+  (เมื่อมีเเจ้งเตือน icon ระฆังจะเปลี่ยน สามารถคลิกเพื่อเข้าไปสู่หน้าเเจ้งเตือน เพื่อดูเเจ้งเตือนเเละเพิ่มอะไหล่ได้)
+  
+`หน้าข้อมูลพนักงาน`
 
-## Deploy on Vercel
+  - เเสดงข้อมูลพนักงานทั้ง 2 ตำเเหน่ง เเละจัดการข้อมูลพนักงานได้ เช่น เพิ่ม, เเก้ไข, ลบ ข้อมูลพนักงาน
+  
+`หน้าเบิกอะไหล่ด้วยบาร์โค้ด`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  - ต้องเลือกผู้เบิก เเละต้องใช้เครื่องสเเกนบาร์โค้ด ถึงจะทำรายการเบิกอะไหล่ได้
+  
+`หน้าทำรายการคืนอะไหล่`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  - จะคืนอะไหล่ได้จะต้องเบิกอะไหล่ก่อน โดยการจะคืนจะเอาข้อมูลจากการเบิกของการทำรายการนั้นๆมาเเสดงเพื่อใช้สำหรับการจะคืนอะไหล่
+  
+`หน้าประวัติการเบิกเเละคืนอะไหล่`
+
+  - จะเเสดงรายการการเบิก/คืนอะไหล่ เช่น ชื่อผู้เบิก/คืน, ชื่ออะไหล่ที่เบิก/คืน, เวลาเบิก/คืน, จำนวนเบิก/คืน, วัน-เวลาเบิก/คืน
+  
+`หน้าข้อมูลบัญชี`
+
+  - จะสามารถเเก้ไขข้อมูลของผู้ใช้ที่ทำการเข้าสู่ระบบได้
+  
